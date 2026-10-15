@@ -32,8 +32,8 @@
 \setbeamertemplate{navigation symbols}{}
 
 % --- Metadados da Apresentacao ---
-\title[HelpDesk AI]{\textbf{HelpDesk AI: Triagem Inteligente de Chamados}}
-\subtitle{Automacao e Autoatendimento com No Code, Low Code e Vibecode}
+\title[HelpDesk AI — NexusTech]{\textbf{HelpDesk AI: Triagem Inteligente por Setor Corporativo}}
+\subtitle{Estudo de Caso NexusTech S.A. — No Code, Low Code e Vibecode}
 
 \author[Gustavo Negreiros]{
     \textbf{Discente:} Gustavo Negreiros
@@ -58,25 +58,25 @@
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% Slide 2: Contexto e O Desafio
+% Slide 2: Cenario Corporativo e O Desafio
 % -----------------------------------------------------------------------------
-\begin{frame}{Contextualização: O Gargalo no Suporte Técnico (ITSM)}
+\begin{frame}{Cenário Corporativo: NexusTech S.A.}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \begin{block}{O Cenário nos Departamentos de TI}
+            \begin{block}{O Contexto Organizacional}
                 \begin{itemize}
-                    \item Alto volume de chamados de baixa complexidade (redefinição de senhas, dúvidas de rede, instalações).
-                    \item Triagem manual consome tempo valioso de analistas sêniores.
-                    \item Tempo de primeira resposta elevado para o usuário.
+                    \item Empresa de médio porte de tecnologia financeira e logística com \textbf{5 departamentos}.
+                    \item Fila única de chamados sem distinção de criticidade entre setores.
+                    \item Analistas sobrecarregados com triagem manual e dúvidas recorrentes de Nível 1.
                 \end{itemize}
             \end{block}
         \end{column}
         
         \begin{column}{0.48\textwidth}
-            \begin{alertblock}{O Desafio de Desenvolvimento}
+            \begin{alertblock}{O Problema da Fila Única}
                 \begin{itemize}
-                    \item Desenvolver uma plataforma completa de Help Desk com backend tradicional (Node.js/Django, SQL, DevOps) exige alto custo e longo prazo de entrega.
-                    \item Urgência de validação ágil com protótipos funcionais.
+                    \item Uma falha simples no setor Administrativo competia na mesma fila que um incidente crítico em \textbf{Operações (NOC)} ou \textbf{Faturamento}.
+                    \item Subjetividade: usuários marcavam todos os chamados como urgentes.
                 \end{itemize}
             \end{alertblock}
         \end{column}
@@ -84,24 +84,51 @@
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% Slide 3: A Proposta: HelpDesk AI
+% Slide 3: Matriz de Criticidade por Setor
+% -----------------------------------------------------------------------------
+\begin{frame}{Estrutura Organizacional e Matriz de Criticidade}
+    \begin{table}[h]
+        \centering
+        \footnotesize
+        \begin{tabular}{llll}
+            \toprule
+            \textbf{Setor (NexusTech S.A.)} & \textbf{Impacto de Negócio} & \textbf{Exemplos de Falhas} & \textbf{Prioridade / SLA} \\
+            \midrule
+            \textbf{1. Operações e NOC} & Altíssimo (Cliente Final) & Queda de servidores / Links & P1 ou P2 (15m -- 1h) \\
+            \textbf{2. Financeiro e Faturamento} & Alto (Fluxo de Caixa) & Erro em ERP / Notas Fiscais & P1 ou P2 (30m -- 2h) \\
+            \textbf{3. Engenharia de Software} & Médio/Alto (Deploys) & Falha em CI/CD / Acesso Git & P2 ou P3 (1h -- 4h) \\
+            \textbf{4. Comercial e CX} & Médio (Vendas e CRM) & Instabilidade em CRM / VoIP & P2 ou P3 (2h -- 6h) \\
+            \textbf{5. RH e Administrativo} & Moderado (Interno) & Impressoras / Contas Office & P3 ou P4 (4h -- 24h) \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
+
+    \vspace{0.2cm}
+    \begin{block}{Regra de Negócio Contextual}
+        A prioridade final e o SLA não dependem apenas do sintoma técnico, mas do \textbf{cruzamento entre a gravidade do relato e o peso estratégico do setor solicitante}.
+    \end{block}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 4: A Solucao: HelpDesk AI Contextual
 % -----------------------------------------------------------------------------
 \begin{frame}{A Solução: HelpDesk AI}
-    \begin{block}{\textbf{Objetivo do Projeto}}
-        Desenvolver um protótipo funcional de triagem automatizada e autoatendimento de incidentes técnicos de primeiro nível, integrando ferramentas No Code, automação Low Code e inteligência artificial generativa.
+    \begin{block}{\textbf{Objetivo do Protótipo}}
+        Automatizar a triagem primária e o autoatendimento da NexusTech S.A. cruzando o \textbf{Setor Corporativo} e o \textbf{Relato Técnico} por meio de plataformas visuais e IA generativa.
     \end{block}
 
     \vspace{0.3cm}
-    \textbf{Diferenciais Operacionais:}
+    \textbf{Entregas Automatizadas pelo Sistema:}
     \begin{itemize}
-        \item \textbf{Triagem Imediata:} Classificação do incidente em segundos após a abertura.
-        \item \textbf{Priorização Técnica Racional:} Redução do viés do usuário através de matriz P1 a P4 calculada por IA.
-        \item \textbf{Autoatendimento Guiado:} O solicitante recebe um passo a passo para resolução autônoma antes da intervenção humana.
+        \item \textbf{Classificação Técnica:} Hardware, Software, Rede/Infraestrutura ou Acesso/Segurança.
+        \item \textbf{Cálculo Dinâmico de Prioridade e SLA:} Atribuição racional de P1 a P4 e tempo estimado de atendimento conforme o setor.
+        \item \textbf{Definição de Fila:} Direcionamento para Nível 1, Nível 2 Infra ou Nível 2 Sistemas.
+        \item \textbf{Autoatendimento Imediato:} Envio de guia passo a passo por e-mail para resolução rápida pelo próprio colaborador.
     \end{itemize}
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% Slide 4: O Tripe Metodologico
+% Slide 5: O Tripe Metodologico
 % -----------------------------------------------------------------------------
 \begin{frame}{O Tripé Metodológico Aplicado}
     \begin{columns}[T]
@@ -109,8 +136,8 @@
             \begin{block}{\textbf{1. No Code}}
                 \textbf{Google Forms \& Sheets}
                 \begin{itemize}
-                    \item Interface responsiva de abertura de chamados.
-                    \item Base de dados tabular estruturada.
+                    \item Formulário com seleção de Setor Corporativo.
+                    \item Planilha central de governança de TI.
                     \item Zero linhas de código.
                 \end{itemize}
             \end{block}
@@ -120,9 +147,9 @@
             \begin{block}{\textbf{2. Low Code}}
                 \textbf{Make (Integromat)}
                 \begin{itemize}
-                    \item Orquestração lógica orientada a eventos.
-                    \item Mapeamento de payloads e variáveis.
-                    \item Roteamento entre APIs.
+                    \item Escuta ativa de novos chamados.
+                    \item Injeção das variáveis de Setor e Relato na API.
+                    \item Atualização da planilha e disparo de e-mail.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -131,9 +158,9 @@
             \begin{block}{\textbf{3. Vibecode}}
                 \textbf{Gemini / LLM}
                 \begin{itemize}
-                    \item Engenharia de prompt instrucional.
-                    \item Classificação semântica de chamados.
-                    \item Redação de roteiros de resolução.
+                    \item Avaliação contextual (Setor $\times$ Incidente).
+                    \item Definição de SLA e Fila Técnica.
+                    \item Redação de guia de autoatendimento.
                 \end{itemize}
             \end{block}
         \end{column}
@@ -141,36 +168,36 @@
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% Slide 5: Camadas No Code e Low Code
+% Slide 6: Camadas No Code e Low Code na Pratica
 % -----------------------------------------------------------------------------
 \begin{frame}{Implementação: No Code e Low Code}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \textbf{No Code (Forms \& Sheets):}
+            \textbf{No Code (Portal e Governança):}
             \begin{itemize}
-                \item Coleta dados: Nome, E-mail, Título e Relato detalhado do problema.
-                \item Gravação instantânea na planilha de controle do suporte.
+                \item \textbf{Entrada:} Nome, E-mail, \textbf{Setor (Lista Suspensa)}, Título e Descrição.
+                \item \textbf{Colunas de Governança no Sheets:} Categoria, Prioridade, SLA Estimado e Fila Responsável (preenchidas automaticamente).
             \end{itemize}
         \end{column}
 
         \begin{column}{0.48\textwidth}
-            \textbf{Low Code (Make):}
+            \textbf{Low Code (Orquestração no Make):}
             \begin{itemize}
-                \item Monitora inserções de linhas na planilha.
-                \item Encaminha o relato como payload para a API de IA.
-                \item Atualiza a linha com Categoria e Prioridade geradas pela IA e dispara o e-mail via conector Gmail.
+                \item Captura a linha recém-criada no Google Sheets.
+                \item Envia os dados estruturados para o modelo Gemini.
+                \item Grava o diagnóstico na planilha da TI e notifica o colaborador via Gmail.
             \end{itemize}
         \end{column}
     \end{columns}
 
-    \vspace{0.5cm}
+    \vspace{0.4cm}
     \begin{center}
         \begin{tikzpicture}[node distance=2.2cm, auto, >=Stealth]
-            \tikzstyle{box} = [rectangle, draw=primaryNavy, fill=white, thick, text centered, rounded corners, minimum height=0.9cm, minimum width=2.4cm]
-            \node[box] (n1) {\textbf{Novo Chamado}};
+            \tikzstyle{box} = [rectangle, draw=primaryNavy, fill=white, thick, text centered, rounded corners, minimum height=0.9cm, minimum width=2.5cm]
+            \node[box] (n1) {\textbf{Ticket + Setor}};
             \node[box, right of=n1, xshift=1.2cm] (n2) {\textbf{Make Trigger}};
-            \node[box, right of=n2, xshift=1.2cm] (n3) {\textbf{Consulta IA}};
-            \node[box, right of=n3, xshift=1.2cm] (n4) {\textbf{Gmail / Sheets}};
+            \node[box, right of=n2, xshift=1.2cm] (n3) {\textbf{Matriz IA}};
+            \node[box, right of=n3, xshift=1.2cm] (n4) {\textbf{Sheets + Gmail}};
             
             \draw[->, thick, color=accentTeal] (n1) -- (n2);
             \draw[->, thick, color=accentTeal] (n2) -- (n3);
@@ -180,37 +207,34 @@
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% Slide 6: Camada Vibecode: IA e Engenharia de Prompt
+% Slide 7: Camada Vibecode: Matriz Cognitiva
 % -----------------------------------------------------------------------------
-\begin{frame}{Camada Vibecode: A Lógica Cognitiva da IA}
-    \textbf{Como o Vibecode opera na solução?}
+\begin{frame}{Camada Vibecode: Ponderação Setor $\times$ Incidente}
+    \textbf{Por que usar Vibecode em vez de condicionais tradicionais?}
     \begin{itemize}
-        \item Substituição de lógicas condicionais complexas (if/else) por interpretação em linguagem natural.
-        \item A IA recebe o texto livre do solicitante e gera uma saída estruturada em formato padronizado.
+        \item Em programação tradicional, cruzar 5 setores com centenas de sintomas diferentes exigiria árvores complexas de \texttt{if/else} ou expressões regulares frágeis.
+        \item Com engenharia de prompt, a IA compreende a semântica do problema sob o contexto do setor.
     \end{itemize}
 
     \vspace{0.2cm}
-    \begin{exampleblock}{Diretrizes do Prompt de Triagem}
-        \textit{"Você é um especialista em suporte técnico de TI (Help Desk). Analise o relato a seguir: \{\{Relato\}\}. Identifique a Categoria (Hardware, Software, Rede ou Acesso), atribua uma Prioridade técnica (P1 a P4) e elabore um roteiro de 3 a 4 passos práticos para o usuário tentar resolver a falha imediatamente."}
+    \begin{exampleblock}{Estrutura do Prompt Contextual (Vibecode)}
+        \textit{"Você é o motor de triagem de TI da NexusTech S.A. Analise o chamado aberto pelo setor \{\{Setor\}\} com o título \{\{Título\}\} e relato: \{\{Descrição\}\}. Considerando o peso estratégico desse setor, retorne: 1) Categoria Técnica, 2) Prioridade (P1 a P4) e SLA estimado, 3) Fila de Escalonamento e 4) Um guia prático em 3 passos para autoatendimento imediato do colaborador."}
     \end{exampleblock}
-
-    \vspace{0.2cm}
-    \textbf{Resultado:} Tratamento humanizado, técnico e preciso para cada incidente relatado.
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% Slide 7: Arquitetura Ponta a Ponta
+% Slide 8: Arquitetura Ponta a Ponta
 % -----------------------------------------------------------------------------
 \begin{frame}{Arquitetura e Fluxo de Dados Ponta a Ponta}
     \begin{center}
         \begin{tikzpicture}[node distance=1.6cm, auto, >=Stealth, font=\small]
-            \tikzstyle{step} = [rectangle, draw=primaryNavy, fill=primaryNavy!10, thick, text centered, rounded corners, minimum height=1.1cm, text width=2.2cm]
+            \tikzstyle{step} = [rectangle, draw=primaryNavy, fill=primaryNavy!10, thick, text centered, rounded corners, minimum height=1.2cm, text width=2.2cm]
             
-            \node[step] (f1) {\textbf{1. Usuário}\\Abre Chamado};
-            \node[step, right of=f1, xshift=1.1cm] (f2) {\textbf{2. Sheets}\\Registra Dados};
-            \node[step, right of=f2, xshift=1.1cm] (f3) {\textbf{3. Make}\\Dispara Fluxo};
-            \node[step, right of=f3, xshift=1.1cm] (f4) {\textbf{4. Gemini IA}\\Classifica e Orienta};
-            \node[step, right of=f4, xshift=1.1cm] (f5) {\textbf{5. Retorno}\\Sheets + Gmail};
+            \node[step] (f1) {\textbf{1. Colaborador}\\Informa Setor e Falha};
+            \node[step, right of=f1, xshift=1.1cm] (f2) {\textbf{2. Sheets}\\Registra Ticket};
+            \node[step, right of=f2, xshift=1.1cm] (f3) {\textbf{3. Make}\\Extrai Contexto};
+            \node[step, right of=f3, xshift=1.1cm] (f4) {\textbf{4. Gemini IA}\\Calcula SLA e Guia};
+            \node[step, right of=f4, xshift=1.1cm] (f5) {\textbf{5. Desfecho}\\Atualiza TI + E-mail};
 
             \draw[->, very thick, color=accentTeal] (f1) -- (f2);
             \draw[->, very thick, color=accentTeal] (f2) -- (f3);
@@ -219,81 +243,84 @@
         \end{tikzpicture}
     \end{center}
     
-    \vspace{0.5cm}
-    \begin{block}{Segurança e Confiabilidade}
-        O fluxo possui validação para garantir que problemas críticos (como servidores inoperantes ou incidentes de segurança) sejam classificados imediatamente como P1, orientando o usuário a acionar os canais de emergência.
+    \vspace{0.4cm}
+    \begin{block}{Exemplo Prático de Comportamento do Sistema}
+        \begin{itemize}
+            \item \textbf{Caso A:} "Lentidão na planilha" no setor \textbf{RH} $\rightarrow$ Classificado como \textbf{P4 (SLA 24h)}.
+            \item \textbf{Caso B:} "Erro ao emitir nota fiscal no ERP" no setor \textbf{Financeiro} $\rightarrow$ Classificado como \textbf{P1 (SLA 30 min)} e escalonado para Nível 2 Sistemas.
+        \end{itemize}
     \end{block}
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% Slide 8: Reflexao Critica: 3 Vantagens
+% Slide 9: Reflexao Critica: 3 Vantagens
 % -----------------------------------------------------------------------------
 \begin{frame}{Reflexão Crítica: 3 Vantagens Principais}
     \begin{enumerate}
-        \item \textbf{Redução Radical do Tempo de Resposta (SLA Primário):}
+        \item \textbf{Priorização Inteligente Sensível ao Negócio (\textit{Business-Aware Triage}):}
         \begin{itemize}
-            \item O usuário obtém assistência técnica estruturada em segundos, viabilizando a resolução autônoma imediata.
+            \item Elimina a subjetividade do usuário ao ponderar automaticamente a criticidade do departamento afetado na NexusTech S.A.
         \end{itemize}
         \vspace{0.2cm}
-        \item \textbf{Time-to-Market Acelerado e Custo de Infraestrutura Zero:}
+        \item \textbf{Redução Drástica do Tempo de Resposta em Nível 1:}
         \begin{itemize}
-            \item Solução funcional construída em poucas horas de trabalho com planos gratuitos (Google Workspace, Make e APIs de IA).
+            \item O colaborador recebe instruções técnicas personalizadas e a previsão de SLA em segundos após submeter o formulário.
         \end{itemize}
         \vspace{0.2cm}
-        \item \textbf{Compreensão Semântica e Flexibilidade (Vibecode):}
+        \item \textbf{Alta Velocidade de Prototipação e Custo Zero:}
         \begin{itemize}
-            \item A IA interpreta termos leigos e relatos imprecisos sem exigir regras rígidas de programação.
+            \item Arquitetura completa validada sem necessidade de provisionamento de servidores, bancos relacionais ou código boilerplate.
         \end{itemize}
     \end{enumerate}
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% Slide 9: Reflexao Critica: 3 Limitacoes
+% Slide 10: Reflexao Critica: 3 Limitacoes
 % -----------------------------------------------------------------------------
 \begin{frame}{Reflexão Crítica: 3 Limitações e Desafios}
     \begin{enumerate}
-        \item \textbf{Risco de Alucinação em Instruções Técnicas:}
+        \item \textbf{Risco de Diagnóstico Incompleto ou Alucinação:}
         \begin{itemize}
-            \item Modelos generativos podem recomendar comandos incorretos. A solução atua estritamente como triagem de suporte básico, não substituindo o técnico humano.
+            \item Relatos muito curtos ou ambíguos podem induzir a IA a sugerir passos genéricos. O sistema atua como triagem inicial, mantendo a supervisão humana na planilha.
         \end{itemize}
         \vspace{0.2cm}
-        \item \textbf{Gargalos de Cota e Latência em Planos Gratuitos:}
+        \item \textbf{Limites de Operações e Latência no Plano Gratuito:}
         \begin{itemize}
-            \item O plano gratuito do Make impõe limites de operações mensais e verificação em intervalos de polling.
+            \item A conta gratuita do Make possui limite mensal de 1.000 operações e janelas de verificação periódica (polling).
         \end{itemize}
         \vspace{0.2cm}
-        \item \textbf{Governança e Privacidade de Dados (LGPD):}
+        \item \textbf{Governança, Segurança e Privacidade (LGPD):}
         \begin{itemize}
-            \item Informações internas trafegam por provedores de nuvem públicos. Em cenários corporativos sensíveis, exige-se contratação de instâncias dedicadas.
+            \item Dados corporativos da NexusTech S.A. transitam por APIs públicas. Em produção real, exige-se anonimização e instâncias empresariais privadas.
         \end{itemize}
     \end{enumerate}
 \end{frame}
 
 % -----------------------------------------------------------------------------
-% Slide 10: Proximos Passos e Conclusao
+% Slide 11: Proximos Passos e Conclusao
 % -----------------------------------------------------------------------------
 \begin{frame}{Próximos Passos e Conclusão}
     \begin{columns}[T]
         \begin{column}{0.48\textwidth}
-            \textbf{Perspectivas de Evolução:}
+            \textbf{Evoluções Futuras na NexusTech S.A.:}
             \begin{itemize}
-                \item Integração direta com plataformas corporativas de chamados (Jira Service Management, Zendesk).
-                \item Canal de atendimento via WhatsApp API ou bots no Microsoft Teams / Slack.
-                \item Conexão da IA a uma base de conhecimento privada (RAG).
+                \item Roteamento de alertas críticos (P1) diretamente para canais do Slack ou Microsoft Teams da equipe de plantão.
+                \item Uso de RAG (\textit{Retrieval-Augmented Generation}) conectado aos manuais internos da empresa.
+                \item Integração bidirecional com Jira Service Management.
             \end{itemize}
         \end{column}
 
         \begin{column}{0.48\textwidth}
             \begin{block}{\textbf{Conclusão}}
-                O desenvolvimento do HelpDesk AI comprovou que a articulação entre No Code, Low Code e Vibecode viabiliza a entrega ágil de ferramentas cognitivas de alto valor agregado com custo e esforço mínimos.
+                A combinação de No Code, Low Code e Vibecode permitiu criar uma solução de triagem corporativa contextualizada, demonstrando como a IA generativa eleva a eficiência operacional na Engenharia de Software moderna.
             \end{block}
         \end{column}
     \end{columns}
 
-    \vspace{0.6cm}
+    \vspace{0.5cm}
     \begin{center}
         \large \textbf{Obrigado!} \\
-        \normalsize Espaço aberto para considerações e perguntas.
+        \normalsize Espaço aberto para dúvidas e considerações.
     \end{center}
 \end{frame}
 

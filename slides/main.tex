@@ -1,0 +1,300 @@
+\documentclass[aspectratio=169, 10pt]{beamer}
+
+% --- Pacotes de Idioma e Codificacao ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning}
+
+% --- Configuracao de Tema e Cores ---
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+% Paleta de cores corporativa e sobria
+\definecolor{primaryNavy}{RGB}{20, 35, 60}
+\definecolor{accentTeal}{RGB}{0, 130, 120}
+\definecolor{lightGray}{RGB}{245, 247, 250}
+
+\setbeamercolor{palette primary}{bg=primaryNavy, fg=white}
+\setbeamercolor{palette secondary}{bg=accentTeal, fg=white}
+\setbeamercolor{palette tertiary}{bg=primaryNavy!90, fg=white}
+\setbeamercolor{structure}{fg=primaryNavy}
+\setbeamercolor{titlelike}{parent=palette primary}
+\setbeamercolor{block title}{bg=primaryNavy, fg=white}
+\setbeamercolor{block body}{bg=lightGray, fg=black}
+\setbeamercolor{block title alerted}{bg=red!75!black, fg=white}
+\setbeamercolor{block body alerted}{bg=red!5, fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+
+% --- Metadados da Apresentacao ---
+\title[HelpDesk AI]{\textbf{HelpDesk AI: Triagem Inteligente de Chamados}}
+\subtitle{Automacao e Autoatendimento com No Code, Low Code e Vibecode}
+
+\author[Gustavo Negreiros]{
+    \textbf{Discente:} Gustavo Negreiros
+}
+
+\institute[UDF]{
+    \textbf{Centro Universitário do Distrito Federal (UDF)} \\
+    Tendências em Ciência da Computação \\
+    \textbf{Docente:} Profa. Kadidja Valéria
+}
+
+\date{\today}
+
+% --- Inicio do Documento ---
+\begin{document}
+
+% -----------------------------------------------------------------------------
+% Slide 1: Capa
+% -----------------------------------------------------------------------------
+\begin{frame}[plain]
+    \titlepage
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 2: Contexto e O Desafio
+% -----------------------------------------------------------------------------
+\begin{frame}{Contextualização: O Gargalo no Suporte Técnico (ITSM)}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{block}{O Cenário nos Departamentos de TI}
+                \begin{itemize}
+                    \item Alto volume de chamados de baixa complexidade (redefinição de senhas, dúvidas de rede, instalações).
+                    \item Triagem manual consome tempo valioso de analistas sêniores.
+                    \item Tempo de primeira resposta elevado para o usuário.
+                \end{itemize}
+            \end{block}
+        \end{column}
+        
+        \begin{column}{0.48\textwidth}
+            \begin{alertblock}{O Desafio de Desenvolvimento}
+                \begin{itemize}
+                    \item Desenvolver uma plataforma completa de Help Desk com backend tradicional (Node.js/Django, SQL, DevOps) exige alto custo e longo prazo de entrega.
+                    \item Urgência de validação ágil com protótipos funcionais.
+                \end{itemize}
+            \end{alertblock}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 3: A Proposta: HelpDesk AI
+% -----------------------------------------------------------------------------
+\begin{frame}{A Solução: HelpDesk AI}
+    \begin{block}{\textbf{Objetivo do Projeto}}
+        Desenvolver um protótipo funcional de triagem automatizada e autoatendimento de incidentes técnicos de primeiro nível, integrando ferramentas No Code, automação Low Code e inteligência artificial generativa.
+    \end{block}
+
+    \vspace{0.3cm}
+    \textbf{Diferenciais Operacionais:}
+    \begin{itemize}
+        \item \textbf{Triagem Imediata:} Classificação do incidente em segundos após a abertura.
+        \item \textbf{Priorização Técnica Racional:} Redução do viés do usuário através de matriz P1 a P4 calculada por IA.
+        \item \textbf{Autoatendimento Guiado:} O solicitante recebe um passo a passo para resolução autônoma antes da intervenção humana.
+    \end{itemize}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 4: O Tripe Metodologico
+% -----------------------------------------------------------------------------
+\begin{frame}{O Tripé Metodológico Aplicado}
+    \begin{columns}[T]
+        \begin{column}{0.32\textwidth}
+            \begin{block}{\textbf{1. No Code}}
+                \textbf{Google Forms \& Sheets}
+                \begin{itemize}
+                    \item Interface responsiva de abertura de chamados.
+                    \item Base de dados tabular estruturada.
+                    \item Zero linhas de código.
+                \end{itemize}
+            \end{block}
+        \end{column}
+
+        \begin{column}{0.32\textwidth}
+            \begin{block}{\textbf{2. Low Code}}
+                \textbf{Make (Integromat)}
+                \begin{itemize}
+                    \item Orquestração lógica orientada a eventos.
+                    \item Mapeamento de payloads e variáveis.
+                    \item Roteamento entre APIs.
+                \end{itemize}
+            \end{block}
+        \end{column}
+
+        \begin{column}{0.32\textwidth}
+            \begin{block}{\textbf{3. Vibecode}}
+                \textbf{Gemini / LLM}
+                \begin{itemize}
+                    \item Engenharia de prompt instrucional.
+                    \item Classificação semântica de chamados.
+                    \item Redação de roteiros de resolução.
+                \end{itemize}
+            \end{block}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 5: Camadas No Code e Low Code
+% -----------------------------------------------------------------------------
+\begin{frame}{Implementação: No Code e Low Code}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{No Code (Forms \& Sheets):}
+            \begin{itemize}
+                \item Coleta dados: Nome, E-mail, Título e Relato detalhado do problema.
+                \item Gravação instantânea na planilha de controle do suporte.
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \textbf{Low Code (Make):}
+            \begin{itemize}
+                \item Monitora inserções de linhas na planilha.
+                \item Encaminha o relato como payload para a API de IA.
+                \item Atualiza a linha com Categoria e Prioridade geradas pela IA e dispara o e-mail via conector Gmail.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.5cm}
+    \begin{center}
+        \begin{tikzpicture}[node distance=2.2cm, auto, >=Stealth]
+            \tikzstyle{box} = [rectangle, draw=primaryNavy, fill=white, thick, text centered, rounded corners, minimum height=0.9cm, minimum width=2.4cm]
+            \node[box] (n1) {\textbf{Novo Chamado}};
+            \node[box, right of=n1, xshift=1.2cm] (n2) {\textbf{Make Trigger}};
+            \node[box, right of=n2, xshift=1.2cm] (n3) {\textbf{Consulta IA}};
+            \node[box, right of=n3, xshift=1.2cm] (n4) {\textbf{Gmail / Sheets}};
+            
+            \draw[->, thick, color=accentTeal] (n1) -- (n2);
+            \draw[->, thick, color=accentTeal] (n2) -- (n3);
+            \draw[->, thick, color=accentTeal] (n3) -- (n4);
+        \end{tikzpicture}
+    \end{center}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 6: Camada Vibecode: IA e Engenharia de Prompt
+% -----------------------------------------------------------------------------
+\begin{frame}{Camada Vibecode: A Lógica Cognitiva da IA}
+    \textbf{Como o Vibecode opera na solução?}
+    \begin{itemize}
+        \item Substituição de lógicas condicionais complexas (if/else) por interpretação em linguagem natural.
+        \item A IA recebe o texto livre do solicitante e gera uma saída estruturada em formato padronizado.
+    \end{itemize}
+
+    \vspace{0.2cm}
+    \begin{exampleblock}{Diretrizes do Prompt de Triagem}
+        \textit{"Você é um especialista em suporte técnico de TI (Help Desk). Analise o relato a seguir: \{\{Relato\}\}. Identifique a Categoria (Hardware, Software, Rede ou Acesso), atribua uma Prioridade técnica (P1 a P4) e elabore um roteiro de 3 a 4 passos práticos para o usuário tentar resolver a falha imediatamente."}
+    \end{exampleblock}
+
+    \vspace{0.2cm}
+    \textbf{Resultado:} Tratamento humanizado, técnico e preciso para cada incidente relatado.
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 7: Arquitetura Ponta a Ponta
+% -----------------------------------------------------------------------------
+\begin{frame}{Arquitetura e Fluxo de Dados Ponta a Ponta}
+    \begin{center}
+        \begin{tikzpicture}[node distance=1.6cm, auto, >=Stealth, font=\small]
+            \tikzstyle{step} = [rectangle, draw=primaryNavy, fill=primaryNavy!10, thick, text centered, rounded corners, minimum height=1.1cm, text width=2.2cm]
+            
+            \node[step] (f1) {\textbf{1. Usuário}\\Abre Chamado};
+            \node[step, right of=f1, xshift=1.1cm] (f2) {\textbf{2. Sheets}\\Registra Dados};
+            \node[step, right of=f2, xshift=1.1cm] (f3) {\textbf{3. Make}\\Dispara Fluxo};
+            \node[step, right of=f3, xshift=1.1cm] (f4) {\textbf{4. Gemini IA}\\Classifica e Orienta};
+            \node[step, right of=f4, xshift=1.1cm] (f5) {\textbf{5. Retorno}\\Sheets + Gmail};
+
+            \draw[->, very thick, color=accentTeal] (f1) -- (f2);
+            \draw[->, very thick, color=accentTeal] (f2) -- (f3);
+            \draw[->, very thick, color=accentTeal] (f3) -- (f4);
+            \draw[->, very thick, color=accentTeal] (f4) -- (f5);
+        \end{tikzpicture}
+    \end{center}
+    
+    \vspace{0.5cm}
+    \begin{block}{Segurança e Confiabilidade}
+        O fluxo possui validação para garantir que problemas críticos (como servidores inoperantes ou incidentes de segurança) sejam classificados imediatamente como P1, orientando o usuário a acionar os canais de emergência.
+    \end{block}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 8: Reflexao Critica: 3 Vantagens
+% -----------------------------------------------------------------------------
+\begin{frame}{Reflexão Crítica: 3 Vantagens Principais}
+    \begin{enumerate}
+        \item \textbf{Redução Radical do Tempo de Resposta (SLA Primário):}
+        \begin{itemize}
+            \item O usuário obtém assistência técnica estruturada em segundos, viabilizando a resolução autônoma imediata.
+        \end{itemize}
+        \vspace{0.2cm}
+        \item \textbf{Time-to-Market Acelerado e Custo de Infraestrutura Zero:}
+        \begin{itemize}
+            \item Solução funcional construída em poucas horas de trabalho com planos gratuitos (Google Workspace, Make e APIs de IA).
+        \end{itemize}
+        \vspace{0.2cm}
+        \item \textbf{Compreensão Semântica e Flexibilidade (Vibecode):}
+        \begin{itemize}
+            \item A IA interpreta termos leigos e relatos imprecisos sem exigir regras rígidas de programação.
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 9: Reflexao Critica: 3 Limitacoes
+% -----------------------------------------------------------------------------
+\begin{frame}{Reflexão Crítica: 3 Limitações e Desafios}
+    \begin{enumerate}
+        \item \textbf{Risco de Alucinação em Instruções Técnicas:}
+        \begin{itemize}
+            \item Modelos generativos podem recomendar comandos incorretos. A solução atua estritamente como triagem de suporte básico, não substituindo o técnico humano.
+        \end{itemize}
+        \vspace{0.2cm}
+        \item \textbf{Gargalos de Cota e Latência em Planos Gratuitos:}
+        \begin{itemize}
+            \item O plano gratuito do Make impõe limites de operações mensais e verificação em intervalos de polling.
+        \end{itemize}
+        \vspace{0.2cm}
+        \item \textbf{Governança e Privacidade de Dados (LGPD):}
+        \begin{itemize}
+            \item Informações internas trafegam por provedores de nuvem públicos. Em cenários corporativos sensíveis, exige-se contratação de instâncias dedicadas.
+        \end{itemize}
+    \end{enumerate}
+\end{frame}
+
+% -----------------------------------------------------------------------------
+% Slide 10: Proximos Passos e Conclusao
+% -----------------------------------------------------------------------------
+\begin{frame}{Próximos Passos e Conclusão}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{Perspectivas de Evolução:}
+            \begin{itemize}
+                \item Integração direta com plataformas corporativas de chamados (Jira Service Management, Zendesk).
+                \item Canal de atendimento via WhatsApp API ou bots no Microsoft Teams / Slack.
+                \item Conexão da IA a uma base de conhecimento privada (RAG).
+            \end{itemize}
+        \end{column}
+
+        \begin{column}{0.48\textwidth}
+            \begin{block}{\textbf{Conclusão}}
+                O desenvolvimento do HelpDesk AI comprovou que a articulação entre No Code, Low Code e Vibecode viabiliza a entrega ágil de ferramentas cognitivas de alto valor agregado com custo e esforço mínimos.
+            \end{block}
+        \end{column}
+    \end{columns}
+
+    \vspace{0.6cm}
+    \begin{center}
+        \large \textbf{Obrigado!} \\
+        \normalsize Espaço aberto para considerações e perguntas.
+    \end{center}
+\end{frame}
+
+\end{document}

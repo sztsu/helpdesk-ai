@@ -101,7 +101,7 @@ flowchart LR
   *(Inserir captura de tela do cenário em `docs/images/make_flow.png`)*
 
 * **Exemplo de E-mail de Autoatendimento e SLA Gerado por IA:**  
-  *(Inserir captura de tela do e-mail recebido em `docs/images/email_sample.png`)*
+  ![Exemplo de E-mail de Autoatendimento e SLA Gerado por IA](docs/images/email_sample.png)
 
 ---
 

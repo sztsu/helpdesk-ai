@@ -95,7 +95,7 @@ flowchart LR
   [Acessar Formulário de Suporte — NexusTech S.A.](https://docs.google.com/forms/d/e/1FAIpQLScvJ9kLyNEA24scTzgwMxT70fgD8yKDRmFDDphdJrqPS7DXJA/viewform?usp=publish-editor)
 
 * **Planilha de Governança e Triagem por Setor (Database):**  
-  [Acessar Planilha de Chamados](https://sheets.google.com) *(Inserir link da planilha)*
+  [Acessar Planilha de Chamados — NexusTech S.A.](https://docs.google.com/spreadsheets/d/1wQwLty4UdgL0f-Vay306g_o7PP_l3d6vIycTtGo4vec/edit?usp=sharing)
 
 * **Cenário de Automação no Make:**  
   *(Inserir captura de tela do cenário em `docs/images/make_flow.png`)*

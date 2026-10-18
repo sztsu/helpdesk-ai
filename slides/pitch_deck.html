@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelpDesk AI — Pitch Deck | NexusTech S.A.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #090A0F;
+            --bg-secondary: #11131C;
+            --bg-card: #161926;
+            --bg-card-hover: #1C2030;
+            --border-subtle: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(39, 110, 241, 0.45);
+            --text-primary: #FFFFFF;
+            --text-secondary: #94A3B8;
+            --text-muted: #64748B;
+            --uber-blue: #276EF1;
+            --uber-blue-glow: rgba(39, 110, 241, 0.18);
+            --accent-emerald: #10B981;
+            --accent-emerald-bg: rgba(16, 185, 129, 0.12);
+            --accent-amber: #F59E0B;
+            --accent-amber-bg: rgba(245, 158, 11, 0.12);
+            --accent-red: #EF4444;
+            --accent-red-bg: rgba(239, 68, 68, 0.14);
+            --accent-purple: #8B5CF6;
+            --accent-purple-bg: rgba(139, 92, 246, 0.14);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            user-select: none;
+        }
+
+        /* Deck Container */
+        .deck {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            padding: 56px 80px 76px 80px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(12px) scale(0.99);
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            background: radial-gradient(circle at 88% 12%, rgba(39, 110, 241, 0.10) 0%, transparent 45%),
+                        radial-gradient(circle at 10% 90%, rgba(16, 185, 129, 0.06) 0%, transparent 40%),
+                        var(--bg-primary);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+            z-index: 2;
+        }
+
+        /* Top Bar inside each slide */
+        .slide-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 16px;
+        }
+
+        .brand-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .brand-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--uber-blue);
+            border-radius: 2px;
+            display: inline-block;
+        }
+
+        .slide-index {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+        }
+
+        /* Slide Content Body */
+        .slide-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 28px;
+            padding: 16px 0;
+        }
+
+        /* Typography */
+        .eyebrow {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            color: var(--uber-blue);
+            margin-bottom: 8px;
+        }
+
+        h1.hero-title {
+            font-size: clamp(44px, 5vw, 68px);
+            font-weight: 900;
+            line-height: 1.04;
+            letter-spacing: -0.03em;
+            max-width: 980px;
+        }
+
+        h2.slide-title {
+            font-size: clamp(28px, 3.1vw, 42px);
+            font-weight: 800;
+            line-height: 1.12;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: clamp(16px, 1.4vw, 20px);
+            font-weight: 400;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            max-width: 840px;
+        }
+
+        .highlight-blue {
+            color: var(--uber-blue);
+        }
+
+        .highlight-emerald {
+            color: var(--accent-emerald);
+        }
+
+        /* Grids & Cards */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        .grid-asymmetric {
+            display: grid;
+            grid-template-columns: 1.35fr 0.85fr;
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 14px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card.accent-top-blue {
+            border-top: 3px solid var(--uber-blue);
+        }
+
+        .card.accent-top-emerald {
+            border-top: 3px solid var(--accent-emerald);
+        }
+
+        .card.accent-top-amber {
+            border-top: 3px solid var(--accent-amber);
+        }
+
+        .card.accent-top-red {
+            border-top: 3px solid var(--accent-red);
+        }
+
+        .card-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--uber-blue);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .card h3 {
+            font-size: 19px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--text-primary);
+        }
+
+        .card p {
+            font-size: 14px;
+            line-height: 1.55;
+            color: var(--text-secondary);
+        }
+
+        /* Big Metric Stat Boxes */
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-top: 8px;
+        }
+
+        .stat-box {
+            background: rgba(22, 25, 38, 0.75);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 20px 22px;
+        }
+
+        .stat-value {
+            font-size: clamp(28px, 2.8vw, 40px);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-secondary);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        .badge-p1 {
+            background: var(--accent-red-bg);
+            color: #F87171;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .badge-p2 {
+            background: var(--accent-amber-bg);
+            color: #FBBF24;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .badge-p3 {
+            background: var(--uber-blue-glow);
+            color: #60A5FA;
+            border: 1px solid rgba(39, 110, 241, 0.35);
+        }
+
+        .badge-p4 {
+            background: var(--accent-emerald-bg);
+            color: #34D399;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        /* Executive Table */
+        .exec-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-subtle);
+            font-size: 13.5px;
+        }
+
+        .exec-table th {
+            text-align: left;
+            padding: 13px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .exec-table td {
+            padding: 13px 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+        }
+
+        .exec-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Pipeline Architecture Flow */
+        .pipeline {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            align-items: stretch;
+        }
+
+        .pipe-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 18px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .pipe-step::after {
+            content: "→";
+            position: absolute;
+            right: -13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--uber-blue);
+            font-weight: 800;
+            font-size: 16px;
+            z-index: 3;
+        }
+
+        .pipe-step:last-child::after {
+            display: none;
+        }
+
+        .pipe-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-emerald);
+            text-transform: uppercase;
+        }
+
+        /* Code / Prompt Box */
+        .code-block {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            line-height: 1.6;
+            background: #0D0F17;
+            border: 1px solid var(--border-highlight);
+            border-radius: 12px;
+            padding: 18px 22px;
+            color: #E2E8F0;
+        }
+
+        .var-pill {
+            background: rgba(16, 185, 129, 0.18);
+            color: #34D399;
+            padding: 2px 7px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        /* Screenshot Showcase */
+        .mockup-frame {
+            background: #11131C;
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mockup-header {
+            background: #191C28;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid var(--border-subtle);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .dot-r, .dot-y, .dot-g {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+        }
+        .dot-r { background: #EF4444; }
+        .dot-y { background: #F59E0B; }
+        .dot-g { background: #10B981; }
+
+        .mockup-img-wrap {
+            padding: 14px;
+            background: #FFFFFF;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mockup-img-wrap img {
+            max-width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 6px;
+        }
+
+        /* Bottom Navigation Bar */
+        .deck-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 80px;
+            right: 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10;
+            pointer-events: none;
+        }
+
+        .progress-track {
+            flex: 1;
+            max-width: 320px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: var(--uber-blue);
+            width: 10%;
+            transition: width 0.3s ease;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            pointer-events: auto;
+        }
+
+        .btn-ctrl {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border: 1px solid var(--border-subtle);
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .btn-ctrl:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--uber-blue);
+        }
+
+        .btn-ctrl.primary {
+            background: var(--uber-blue);
+            border-color: var(--uber-blue);
+        }
+
+        /* Print / Export to PDF 16:9 Rules */
+        @page {
+            size: 16in 9in;
+            margin: 0;
+        }
+
+        @media print {
+            body {
+                overflow: visible;
+                height: auto;
+                width: auto;
+            }
+            .deck {
+                height: auto;
+                width: auto;
+            }
+            .slide {
+                position: relative;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                transform: none !important;
+                width: 16in;
+                height: 9in;
+                page-break-after: always;
+                break-after: page;
+            }
+            .deck-controls {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 01: CAPA (UBER PITCH STYLE)                                   -->
+    <!-- =================================================================== -->
+    <section class="slide active">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> UDF — CENTRO UNIVERSITÁRIO DO DISTRITO FEDERAL</div>
+            <div class="slide-index">01 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">TENDÊNCIAS EM CIÊNCIA DA COMPUTAÇÃO • PROFA. KADIDJA VALÉRIA</div>
+                <h1 class="hero-title">HelpDesk <span class="highlight-blue">AI</span></h1>
+                <p class="subtitle" style="margin-top: 14px;">
+                    Triagem cognitiva de chamados de TI e autoatendimento em tempo real ponderados por criticidade de setor corporativo — construídos com <strong>No Code</strong>, <strong>Low Code</strong> e <strong>Vibecode</strong>.
+                </p>
+            </div>
+
+            <div class="stat-row">
+                <div class="stat-box">
+                    <div class="stat-value">5 Setores</div>
+                    <div class="stat-label">Matriz Corporativa NexusTech S.A.</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value highlight-blue">&lt; 30 seg</div>
+                    <div class="stat-label">Tempo de Triagem e 1ª Resposta</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value highlight-emerald">R$ 0,00</div>
+                    <div class="stat-label">Custo de Infraestrutura e Backend</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value">P1 — P4</div>
+                    <div class="stat-label">Cálculo Dinâmico de SLA por IA</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-top" style="border-bottom: none; border-top: 1px solid var(--border-subtle); padding-top: 16px; padding-bottom: 0;">
+            <div style="font-size: 13px; color: var(--text-secondary);"><strong>Autor:</strong> Gustavo Negreiros</div>
+            <div style="font-size: 13px; color: var(--text-muted); font-family: 'JetBrains Mono', monospace;">github.com/sztsu/helpdesk-ai</div>
+        </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 02: O PROBLEMA (THE PAIN)                                     -->
+    <!-- =================================================================== -->
+    <section class="slide">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> O PROBLEMA OPERACIONAL</div>
+            <div class="slide-index">02 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">CENÁRIO CORPORATIVO: NEXUSTECH S.A.</div>
+                <h2 class="slide-title">Filas únicas de suporte tratam falhas críticas de faturamento igual a uma impressora sem papel.</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="card accent-top-red">
+                    <div class="card-num">GARGALO 01</div>
+                    <h3>Cegueira Organizacional</h3>
+                    <p>No suporte tradicional, chamados caem em uma fila linear sem distinção de departamento. Uma falha no setor de <strong>Operações (NOC)</strong> ou <strong>Financeiro</strong> aguarda atrás de dúvidas triviais do setor Administrativo.</p>
+                </div>
+
+                <div class="card accent-top-amber">
+                    <div class="card-num">GARGALO 02</div>
+                    <h3>Subjetividade de Urgência</h3>
+                    <p>Quando o próprio usuário escolhe a urgência no formulário, quase todos os chamados são marcados como "Urgente", distorcendo os Acordos de Nível de Serviço (SLAs) da equipe de TI.</p>
+                </div>
+
+                <div class="card accent-top-blue">
+                    <div class="card-num">GARGALO 03</div>
+                    <h3>Alto Custo de Engenharia</h3>
+                    <p>Desenvolver um sistema ITSM tradicional com backend dedicado (Node.js/Python, banco SQL, servidores e regras de negócio complexas) consome semanas de trabalho e alto orçamento.</p>
+                </div>
+            </div>
+        </div>
+
+        <div></div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 03: A SOLUÇÃO (VALUE PROPOSITION)                             -->
+    <!-- =================================================================== -->
+    <section class="slide">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> A PROPOSTA DE VALOR</div>
+            <div class="slide-index">03 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">SOLUÇÃO ORIENTADA A EVENTOS</div>
+                <h2 class="slide-title">Triagem inteligente sensível ao negócio (<span class="highlight-blue">Business-Aware Triage</span>) sem servidor dedicado.</h2>
+                <p class="subtitle" style="margin-top: 8px;">O HelpDesk AI cruza automaticamente o <strong>Setor Corporativo</strong> com o <strong>Relato Técnico</strong> para entregar quatro resultados instantâneos:</p>
+            </div>
+
+            <div class="grid-4">
+                <div class="card">
+                    <div class="card-num">ENTREGA 01</div>
+                    <h3>Classificação Técnica</h3>
+                    <p>Identifica automaticamente se o incidente pertence a <strong>Hardware</strong>, <strong>Software</strong>, <strong>Rede/Infra</strong> ou <strong>Acesso/Segurança</strong>.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-num">ENTREGA 02</div>
+                    <h3>Prioridade e SLA</h3>
+                    <p>Atribui racionalmente a prioridade (<strong>P1 a P4</strong>) e estipula o prazo máximo de atendimento (de 15 min a 24h).</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-num">ENTREGA 03</div>
+                    <h3>Roteamento de Fila</h3>
+                    <p>Direciona o chamado na planilha de governança para <strong>Nível 1</strong>, <strong>Nível 2 Infraestrutura</strong> ou <strong>Nível 2 Sistemas</strong>.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-num">ENTREGA 04</div>
+                    <h3>Autoatendimento</h3>
+                    <p>Envia um e-mail imediato ao colaborador com <strong>3 passos técnicos seguros</strong> para resolução autônoma.</p>
+                </div>
+            </div>
+        </div>
+
+        <div></div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 04: MATRIZ DE CRITICIDADE POR SETOR                           -->
+    <!-- =================================================================== -->
+    <section class="slide">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> REGRA DE NEGÓCIO CORPORATIVA</div>
+            <div class="slide-index">04 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">ESTRUTURA ORGANIZACIONAL — NEXUSTECH S.A.</div>
+                <h2 class="slide-title">Matriz de Criticidade: O setor define o peso real do incidente.</h2>
+            </div>
+
+            <div class="grid-asymmetric">
+                <table class="exec-table">
+                    <thead>
+                        <tr>
+                            <th>Setor Corporativo</th>
+                            <th>Impacto de Negócio</th>
+                            <th>Prioridade Base</th>
+                            <th>SLA Alvo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>1. Operações e NOC</strong></td>
+                            <td>Disponibilidade ao cliente final</td>
+                            <td><span class="badge badge-p1">P1 / P2</span></td>
+                            <td>15 min — 1h</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Financeiro e Faturamento</strong></td>
+                            <td>Fluxo de caixa e notas fiscais</td>
+                            <td><span class="badge badge-p1">P1 / P2</span></td>
+                            <td>30 min — 2h</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Engenharia e Dev</strong></td>
+                            <td>Esteiras CI/CD e repositórios</td>
+                            <td><span class="badge badge-p2">P2 / P3</span></td>
+                            <td>1h — 4h</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4. Comercial e CX</strong></td>
+                            <td>Vendas e atendimento externo</td>
+                            <td><span class="badge badge-p3">P2 / P3</span></td>
+                            <td>2h — 6h</td>
+                        </tr>
+                        <tr>
+                            <td><strong>5. RH e Administrativo</strong></td>
+                            <td>Rotinas internas departamentais</td>
+                            <td><span class="badge badge-p4">P3 / P4</span></td>
+                            <td>4h — 24h</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="card accent-top-blue" style="justify-content: center;">
+                    <div class="card-num">EXEMPLO COMPARATIVO</div>
+                    <h3>O mesmo sintoma, decisões diferentes</h3>
+                    <p style="margin-top: 6px;">
+                        <strong>Caso A (RH):</strong> "Lentidão ao abrir planilha compartilhada" → Classificado como <span class="badge badge-p4">P4 (SLA 24h)</span>.
+                    </p>
+                    <p style="margin-top: 10px;">
+                        <strong>Caso B (Financeiro):</strong> "Erro ao emitir notas fiscais no ERP no fechamento" → Classificado como <span class="badge badge-p1">P1 (SLA 30 min)</span> e escalado direto para <strong>Nível 2 Sistemas</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div></div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 05: O TRIPÉ TECNOLÓGICO (NO CODE / LOW CODE / VIBECODE)       -->
+    <!-- =================================================================== -->
+    <section class="slide">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> STACK TECNOLÓGICA</div>
+            <div class="slide-index">05 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">PARADIGMAS DA DISCIPLINA</div>
+                <h2 class="slide-title">Convergência entre No Code, Low Code e Vibecode.</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="card accent-top-emerald">
+                    <div class="card-num">01 / NO CODE</div>
+                    <h3>Google Forms &amp; Sheets</h3>
+                    <p><strong>Interface e Persistência:</strong> Coleta estruturada com validação de e-mail e lista suspensa fechada para os 5 setores da NexusTech S.A. Os registros alimentam em tempo real a planilha central de governança da TI.</p>
+                </div>
+
+                <div class="card accent-top-blue">
+                    <div class="card-num">02 / LOW CODE</div>
+                    <h3>Make (Integromat)</h3>
+                    <p><strong>Orquestração de Eventos:</strong> Escuta ativa de novas linhas inseridas na planilha, estruturação do payload com variáveis dinâmicas, chamada à API de IA, atualização da planilha e disparo de e-mail via Gmail.</p>
+                </div>
+
+                <div class="card accent-top-amber">
+                    <div class="card-num">03 / VIBECODE</div>
+                    <h3>Google Gemini Flash</h3>
+                    <p><strong>Motor Cognitivo:</strong> Substitui centenas de condicionais rígidas (<code>if/else</code>) por engenharia de prompt instrucional que interpreta a semântica do problema cruzada com o setor corporativo.</p>
+                </div>
+            </div>
+        </div>
+
+        <div></div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 06: ARQUITETURA E ENGENHARIA DE PROMPT                        -->
+    <!-- =================================================================== -->
+    <section class="slide">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> ARQUITETURA DO SISTEMA</div>
+            <div class="slide-index">06 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">FLUXO DE DADOS ORIENTADO A EVENTOS</div>
+                <h2 class="slide-title">Pipeline de Execução e Engenharia de Prompt (Vibecode).</h2>
+            </div>
+
+            <div class="pipeline">
+                <div class="pipe-step">
+                    <span class="pipe-tag">ETAPA 01</span>
+                    <strong style="font-size: 15px;">Google Forms</strong>
+                    <span style="font-size: 12.5px; color: var(--text-secondary);">Colaborador envia Nome, E-mail, Setor, Título e Relato.</span>
+                </div>
+                <div class="pipe-step">
+                    <span class="pipe-tag">ETAPA 02</span>
+                    <strong style="font-size: 15px;">Google Sheets</strong>
+                    <span style="font-size: 12.5px; color: var(--text-secondary);">Persiste a linha e aciona o gatilho <em>Watch New Rows</em>.</span>
+                </div>
+                <div class="pipe-step">
+                    <span class="pipe-tag">ETAPA 03</span>
+                    <strong style="font-size: 15px;">Make + Gemini</strong>
+                    <span style="font-size: 12.5px; color: var(--text-secondary);">Injeta variáveis do chamado nas instruções de sistema da IA.</span>
+                </div>
+                <div class="pipe-step">
+                    <span class="pipe-tag">ETAPA 04</span>
+                    <strong style="font-size: 15px;">Update Row</strong>
+                    <span style="font-size: 12.5px; color: var(--text-secondary);">Grava o diagnóstico e SLA na Coluna G da planilha da TI.</span>
+                </div>
+                <div class="pipe-step">
+                    <span class="pipe-tag">ETAPA 05</span>
+                    <strong style="font-size: 15px;">Gmail Send</strong>
+                    <span style="font-size: 12.5px; color: var(--text-secondary);">Envia e-mail com SLA e guia de 3 passos ao colaborador.</span>
+                </div>
+            </div>
+
+            <div class="code-block">
+                <div style="color: var(--text-muted); margin-bottom: 6px;">// System Prompt &amp; Payload Mapeado no Make (Google Gemini AI)</div>
+                Você é o motor especialista de triagem de TI da empresa <strong>NexusTech S.A.</strong> Analise o chamado cruzando a gravidade técnica com o peso estratégico do setor:<br>
+                • Colaborador: <span class="var-pill">1. Nome do Colaborador (B)</span> &nbsp;|&nbsp; Setor: <span class="var-pill">1. Setor Corporativo (D)</span><br>
+                • Incidente: <span class="var-pill">1. Título do Incidente (E)</span> &nbsp;|&nbsp; Relato: <span class="var-pill">1. Descrição Detalhada da Falha (F)</span><br>
+                → Retorne: <strong>1) Categoria Técnica</strong>, <strong>2) Prioridade (P1-P4) e SLA</strong>, <strong>3) Fila de Escalonamento</strong> e <strong>4) Guia de Autoatendimento em 3 passos</strong>.
+            </div>
+        </div>
+
+        <div></div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 07: EVIDÊNCIA REAL DO PROTÓTIPO EM EXECUÇÃO                   -->
+    <!-- =================================================================== -->
+    <section class="slide">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> VALIDAÇÃO E EVIDÊNCIAS REAIS</div>
+            <div class="slide-index">07 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">PROTÓTIPO EM PRODUÇÃO</div>
+                <h2 class="slide-title">Resultado real gerado pela automação e entregue via Gmail.</h2>
+            </div>
+
+            <div class="grid-asymmetric">
+                <div class="mockup-frame">
+                    <div class="mockup-header">
+                        <span class="dot-r"></span><span class="dot-y"></span><span class="dot-g"></span>
+                        <span style="margin-left: 8px;">Gmail — NexusTech TI - Triagem do Chamado: Erro ao emitir notas fiscais no sistema ERP</span>
+                    </div>
+                    <div class="mockup-img-wrap">
+                        <img src="../docs/images/email_sample.png" alt="Captura de tela real do e-mail gerado pelo HelpDesk AI">
+                    </div>
+                </div>
+
+                <div class="card accent-top-emerald" style="justify-content: space-between;">
+                    <div>
+                        <div class="card-num">ANÁLISE DO CASO TESTADO</div>
+                        <h3 style="margin-top: 6px;">Precisão na Inferência</h3>
+                        <p style="margin-top: 8px;">
+                            <strong>Entrada:</strong> Falha de comunicação no ERP durante emissão de notas fiscais pelo setor <strong>Financeiro e Faturamento</strong>.
+                        </p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 8px; font-size: 13px; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+                        <div><strong>Categoria:</strong> Software (Sistema ERP)</div>
+                        <div><strong>Prioridade:</strong> <span class="badge badge-p1">P1 — Alta Criticidade</span></div>
+                        <div><strong>SLA Calculado:</strong> 30 minutos</div>
+                        <div><strong>Fila Técnica:</strong> Nível 2 Sistemas</div>
+                        <div><strong>Autoatendimento:</strong> 3 passos (VPN, Sessão e Cache)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div></div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 08: REFLEXÃO CRÍTICA — 3 VANTAGENS                            -->
+    <!-- =================================================================== -->
+    <section class="slide">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> ANÁLISE CRÍTICA — PONTOS FORTES</div>
+            <div class="slide-index">08 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">AVALIAÇÃO ARQUITETURAL</div>
+                <h2 class="slide-title">Três vantagens competitivas da abordagem adotada.</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="card accent-top-emerald">
+                    <div class="card-num">VANTAGEM 01</div>
+                    <h3>Priorização Sensível ao Negócio</h3>
+                    <p>Elimina o viés subjetivo do usuário. O motor cognitivo pondera automaticamente o impacto estratégico do departamento afetado na NexusTech S.A. antes de definir a fila e o SLA.</p>
+                </div>
+
+                <div class="card accent-top-blue">
+                    <div class="card-num">VANTAGEM 02</div>
+                    <h3>Redução Drástica do SLA Primário</h3>
+                    <p>O colaborador recebe instruções técnicas estruturadas em menos de 30 segundos após enviar o formulário, resolvendo incidentes recorrentes de Nível 1 sem intervenção humana.</p>
+                </div>
+
+                <div class="card accent-top-emerald">
+                    <div class="card-num">VANTAGEM 03</div>
+                    <h3>Time-to-Market e Custo Zero</h3>
+                    <p>Um fluxo completo que exigiria semanas de desenvolvimento backend e provisionamento de servidores em nuvem foi prototipado, testado e validado em horas utilizando camadas gratuitas.</p>
+                </div>
+            </div>
+        </div>
+
+        <div></div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 09: REFLEXÃO CRÍTICA — 3 LIMITAÇÕES E DESAFIOS                -->
+    <!-- =================================================================== -->
+    <section class="slide">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> ANÁLISE CRÍTICA — LIMITAÇÕES TÉCNICAS</div>
+            <div class="slide-index">09 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">DESAFIOS REAIS ENFRENTADOS NOS TESTES</div>
+                <h2 class="slide-title">Três limitações identificadas e como foram mitigadas.</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="card accent-top-red">
+                    <div class="card-num">LIMITAÇÃO 01</div>
+                    <h3>Risco de Alucinação em Relatos Vagos</h3>
+                    <p>Descrições excessivamente curtas podem levar a IA a sugerir passos genéricos. <strong>Mitigação:</strong> Guardrails no prompt restringindo a saída a 3 procedimentos seguros e mantendo supervisão humana na planilha.</p>
+                </div>
+
+                <div class="card accent-top-amber">
+                    <div class="card-num">LIMITAÇÃO 02</div>
+                    <h3>Quotas e Latência em Planos Gratuitos</h3>
+                    <p>Durante a bateria de testes, registrou-se erro <code>HTTP 503 High Demand</code> na camada gratuita da API e limite de 1.000 operações/mês no Make. <strong>Mitigação:</strong> Comutação de modelo para estabilidade do fluxo.</p>
+                </div>
+
+                <div class="card accent-top-red">
+                    <div class="card-num">LIMITAÇÃO 03</div>
+                    <h3>Governança e Privacidade (LGPD)</h3>
+                    <p>Os relatos de incidentes corporativos transitam por provedores externos de nuvem (Google e Make). Em produção crítica, exige-se anonimização de dados sensíveis e instâncias empresariais privadas.</p>
+                </div>
+            </div>
+        </div>
+
+        <div></div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- SLIDE 10: PRÓXIMOS PASSOS E CONCLUSÃO                               -->
+    <!-- =================================================================== -->
+    <section class="slide">
+        <div class="slide-top">
+            <div class="brand-pill"><span class="brand-dot"></span> ROADMAP E ENCERRAMENTO</div>
+            <div class="slide-index">10 / 10</div>
+        </div>
+
+        <div class="slide-body">
+            <div>
+                <div class="eyebrow">VISÃO DE PRODUTO</div>
+                <h2 class="slide-title">Próximos passos de evolução na NexusTech S.A.</h2>
+            </div>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-num">HORIZONTE 01</div>
+                    <h3>Alertas P1 em Tempo Real</h3>
+                    <p>Adicionar um <em>Router</em> condicional no Make para disparar notificações imediatas no <strong>Slack</strong> ou <strong>Microsoft Teams</strong> da equipe de plantão sempre que um chamado for classificado como P1.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-num">HORIZONTE 02</div>
+                    <h3>Base de Conhecimento (RAG)</h3>
+                    <p>Conectar o modelo Gemini aos manuais técnicos internos da NexusTech S.A. via <em>Retrieval-Augmented Generation</em> para respostas específicas dos softwares internos da empresa.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-num">HORIZONTE 03</div>
+                    <h3>Integração ITSM Bidirecional</h3>
+                    <p>Substituir gradualmente a planilha por integração via webhook com <strong>Jira Service Management</strong> ou <strong>GLPI</strong> conforme a operação escalar.</p>
+                </div>
+            </div>
+
+            <div class="card accent-top-blue" style="flex-direction: row; justify-content: space-between; align-items: center; padding: 20px 28px;">
+                <div>
+                    <h3 style="font-size: 20px;">Obrigado pela atenção!</h3>
+                    <p style="margin-top: 2px;">Protótipo, código-fonte e documentação disponíveis no repositório oficial do projeto.</p>
+                </div>
+                <div style="font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--uber-blue); font-weight: 600;">
+                    github.com/sztsu/helpdesk-ai
+                </div>
+            </div>
+        </div>
+
+        <div></div>
+    </section>
+
+</div>
+
+<!-- Barra de Controles Inferior (Oculta automaticamente ao exportar PDF) -->
+<div class="deck-controls">
+    <div class="progress-track">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+    <div class="control-buttons">
+        <button class="btn-ctrl" onclick="prevSlide()">← Anterior</button>
+        <button class="btn-ctrl" onclick="nextSlide()">Próximo →</button>
+        <button class="btn-ctrl" onclick="toggleFullScreen()">Tela Cheia (F)</button>
+        <button class="btn-ctrl primary" onclick="window.print()">Salvar como PDF</button>
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    const progressBar = document.getElementById('progressBar');
+    let current = 0;
+
+    function updateSlide(index) {
+        slides.forEach((s, i) => {
+            s.classList.toggle('active', i === index);
+        });
+        const pct = ((index + 1) / slides.length) * 100;
+        progressBar.style.width = pct + '%';
+    }
+
+    function nextSlide() {
+        if (current < slides.length - 1) {
+            current++;
+            updateSlide(current);
+        }
+    }
+
+    function prevSlide() {
+        if (current > 0) {
+            current--;
+            updateSlide(current);
+        }
+    }
+
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+            e.preventDefault();
+            nextSlide();
+        } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+            e.preventDefault();
+            prevSlide();
+        } else if (e.key === 'f' || e.key === 'F') {
+            toggleFullScreen();
+        }
+    });
+</script>
+
+</body>
+</html>

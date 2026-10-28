@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HelpDesk AI — Triagem Setorial e Autoatendimento (NexusTech S.A.)</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    h1, h2, h3, h4, p, ul, li, table, th, td {
+      margin: 0;
+      padding: 0;
+    }
+    ul { list-style: none; }
+    button { background: transparent; border: none; color: inherit; font: inherit; cursor: pointer; }
+
+    /* Offline CSS Fallback (garante funcionamento 100% sem internet no PC da faculdade) */
+    .fixed { position: fixed; }
+    .top-0 { top: 0; } .left-0 { left: 0; } .right-0 { right: 0; } .inset-0 { top: 0; right: 0; bottom: 0; left: 0; }
+    .bottom-2\.5 { bottom: 0.625rem; }
+    .left-1\/2 { left: 50%; }
+    .-translate-x-1\/2 { transform: translateX(-50%); }
+    .z-40 { z-index: 40; } .z-50 { z-index: 50; }
+    .hidden { display: none; }
+    .flex { display: flex; } .flex-col { flex-direction: column; } .flex-1 { flex: 1 1 0%; } .shrink-0 { flex-shrink: 0; }
+    .items-center { align-items: center; } .items-start { align-items: flex-start; } .items-stretch { align-items: stretch; }
+    .justify-between { justify-content: space-between; } .justify-center { justify-content: center; } .justify-end { justify-content: flex-end; }
+    .grid { display: grid; }
+    .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-cols-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .grid-cols-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .grid-cols-12 { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+    .grid-rows-2 { grid-template-rows: repeat(2, minmax(0, 1fr)); }
+    .col-span-5 { grid-column: span 5 / span 5; }
+    .col-span-6 { grid-column: span 6 / span 6; }
+    .col-span-7 { grid-column: span 7 / span 7; }
+    .gap-0 { gap: 0px; } .gap-1 { gap: 0.25rem; } .gap-3 { gap: 0.75rem; } .gap-4 { gap: 1rem; }
+    .gap-5 { gap: 1.25rem; } .gap-6 { gap: 1.5rem; } .gap-8 { gap: 2rem; } .gap-10 { gap: 2.5rem; }
+    .w-full { width: 100%; } .h-full { height: 100%; } .h-auto { height: auto; } .h-1 { height: 0.25rem; }
+    .h-28 { height: 7rem; } .h-48 { height: 12rem; } .h-52 { height: 13rem; }
+    .h-\[68vh\] { height: 68vh; } .h-\[70vh\] { height: 70vh; } .h-\[72vh\] { height: 72vh; } .h-\[82vh\] { height: 82vh; } .h-\[84vh\] { height: 84vh; }
+    .min-h-0 { min-height: 0px; } .max-w-2xl { max-width: 42rem; }
+    .my-auto { margin-top: auto; margin-bottom: auto; } .my-1 { margin-top: 0.25rem; margin-bottom: 0.25rem; }
+    .mt-0\.5 { margin-top: 0.125rem; } .mt-1 { margin-top: 0.25rem; } .mt-2 { margin-top: 0.5rem; }
+    .mb-1 { margin-bottom: 0.25rem; } .mb-2 { margin-bottom: 0.5rem; } .mb-3 { margin-bottom: 0.75rem; }
+    .mb-4 { margin-bottom: 1rem; } .mb-6 { margin-bottom: 1.5rem; }
+    .ml-2 { margin-left: 0.5rem; } .ml-4 { margin-left: 1rem; }
+    .p-3 { padding: 0.75rem; } .p-3\.5 { padding: 0.875rem; } .p-4 { padding: 1rem; } .p-5 { padding: 1.25rem; }
+    .p-6 { padding: 1.5rem; } .p-7 { padding: 1.75rem; } .p-10 { padding: 2.5rem; }
+    .px-2\.5 { padding-left: 0.625rem; padding-right: 0.625rem; } .px-3 { padding-left: 0.75rem; padding-right: 0.75rem; } .px-4 { padding-left: 1rem; padding-right: 1rem; }
+    .py-1 { padding-top: 0.25rem; padding-bottom: 0.25rem; } .py-1\.5 { padding-top: 0.375rem; padding-bottom: 0.375rem; }
+    .py-2\.5 { padding-top: 0.625rem; padding-bottom: 0.625rem; } .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; } .py-4 { padding-top: 1rem; padding-bottom: 1rem; }
+    .pt-1 { padding-top: 0.25rem; } .pt-2\.5 { padding-top: 0.625rem; } .pt-3 { padding-top: 0.75rem; } .pt-4 { padding-top: 1rem; }
+    .pb-2\.5 { padding-bottom: 0.625rem; } .pb-3 { padding-bottom: 0.75rem; } .pb-4 { padding-bottom: 1rem; } .pl-4 { padding-left: 1rem; }
+    .space-y-1 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.25rem; }
+    .space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.5rem; }
+    .space-y-2\.5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.625rem; }
+    .space-y-3\.5 > :not([hidden]) ~ :not([hidden]) { margin-top: 0.875rem; }
+    .space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: 1rem; }
+    .space-y-5 > :not([hidden]) ~ :not([hidden]) { margin-top: 1.25rem; }
+    .divide-y > :not([hidden]) ~ :not([hidden]) { border-top: 1px solid #3f3f46; }
+    .border-collapse { border-collapse: collapse; }
+    .border { border: 1px solid #3f3f46; }
+    .border-l-4 { border-left-width: 4px; border-left-style: solid; }
+    .border-l-orange-400 { border-left-color: #fb923c; }
+    .border-l-zinc-500 { border-left-color: #71717a; }
+    .border-orange-400 { border-color: #fb923c !important; }
+    .bg-zinc-900 { background-color: #18181b; }
+    .bg-zinc-950\/95 { background-color: rgba(9, 9, 11, 0.96); }
+    .bg-orange-400 { background-color: #fb923c; }
+    .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+    .text-base { font-size: 1rem; line-height: 1.5rem; }
+    .text-lg { font-size: 1.125rem; line-height: 1.65rem; }
+    .text-xl { font-size: 1.25rem; line-height: 1.75rem; }
+    .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+    .text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+    .text-4xl { font-size: 2.25rem; line-height: 2.5rem; }
+    .text-5xl { font-size: 3rem; line-height: 1.1; }
+    @media (min-width: 1280px) {
+      .xl\:text-3xl { font-size: 1.875rem; line-height: 2.25rem; }
+      .xl\:text-6xl { font-size: 3.75rem; line-height: 1.08; }
+    }
+    .font-light { font-weight: 300; } .font-normal { font-weight: 400; } .font-medium { font-weight: 500; }
+    .font-semibold { font-weight: 600; } .font-bold { font-weight: 700; } .font-extrabold { font-weight: 800; }
+    .font-mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; }
+    .uppercase { text-transform: uppercase; }
+    .tracking-tight { letter-spacing: -0.025em; } .tracking-wide { letter-spacing: 0.025em; }
+    .tracking-wider { letter-spacing: 0.05em; } .tracking-widest { letter-spacing: 0.1em; }
+    .leading-snug { line-height: 1.375; } .leading-\[1\.1\] { line-height: 1.1; }
+    .text-left { text-align: left; } .text-right { text-align: right; }
+    .text-white { color: #ffffff; } .text-zinc-100 { color: #f4f4f5; } .text-zinc-200 { color: #e4e4e7; }
+    .text-zinc-300 { color: #d4d4d8; } .text-zinc-600 { color: #52525b; } .text-orange-400 { color: #fb923c; }
+    .hover\:text-white:hover { color: #ffffff; } .hover\:text-orange-400:hover { color: #fb923c; } .hover\:text-orange-300:hover { color: #fdba74; }
+    .hover\:border-orange-400:hover { border-color: #fb923c; }
+    .overflow-y-auto { overflow-y: auto; }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #09090b;
+      color: #fafafa;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow: hidden;
+      user-select: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .slide {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      padding: 2.25rem 3.5rem 3.75rem 3.5rem;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .slide.active {
+      display: flex;
+    }
+
+    /* Bordas arquitetônicas de alto contraste para projetor */
+    .hairline-t { border-top: 1.5px solid #3f3f46; }
+    .hairline-b { border-bottom: 1.5px solid #3f3f46; }
+    .hairline-l { border-left: 1.5px solid #3f3f46; }
+    .hairline-r { border-right: 1.5px solid #3f3f46; }
+    .hairline-box { border: 1.5px solid #3f3f46; background: #121216; }
+
+    .accent-bar {
+      width: 36px;
+      height: 4px;
+      background-color: #fb923c;
+      display: inline-block;
+    }
+
+    .photo-frame {
+      position: relative;
+      overflow: hidden;
+      background: #141417;
+      border: 1.5px solid #3f3f46;
+      min-height: 0;
+      min-width: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+    .photo-frame img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .photo-frame img.fit-contain {
+      object-fit: contain;
+      padding: 0.75rem;
+      background: #ffffff;
+    }
+
+    .photo-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 0.65rem 1rem;
+      background: rgba(9, 9, 11, 0.94);
+      border-top: 1px solid #3f3f46;
+      font-size: 15px;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 0.01em;
+      z-index: 2;
+      line-height: 1.3;
+    }
+
+    [contenteditable="true"] {
+      user-select: text;
+      cursor: text;
+      border-bottom: 2px solid transparent;
+    }
+
+    [contenteditable="true"]:hover {
+      border-bottom: 2px dotted #71717a;
+    }
+
+    [contenteditable="true"]:focus {
+      outline: none;
+      border-bottom: 2px solid #fb923c;
+      color: #ffffff;
+    }
+
+    @page {
+      size: 13.333in 7.5in;
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        width: 1280px;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+        background-color: #09090b !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      .slide {
+        display: flex !important;
+        width: 1280px !important;
+        height: 720px !important;
+        padding: 2rem 3.25rem 2.25rem 3.25rem !important;
+        page-break-after: always;
+        break-after: page;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        background-color: #09090b !important;
+      }
+      .h-\[72vh\], .h-\[70vh\] {
+        height: 530px !important;
+      }
+      .h-\[82vh\], .h-\[84vh\] {
+        height: 605px !important;
+      }
+      #nav-bar, #grid-modal, #zoom-modal, .fixed.top-0 {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOP PROGRESS LINE -->
+  <div class="fixed top-0 left-0 right-0 h-1 bg-zinc-900 z-50">
+    <div id="progress" class="h-full bg-orange-400 transition-all duration-200" style="width: 8.33%;"></div>
+  </div>
+
+  <!-- =========================================================
+       SLIDE 01 — CAPA
+       ========================================================= -->
+  <section class="slide active" data-title="Capa">
+    <header class="flex items-center justify-between hairline-b pb-3 text-base font-semibold tracking-wider uppercase text-zinc-200">
+      <span>UDF · Tendências em Ciência da Computação</span>
+      <span class="font-mono text-orange-400">NO CODE · LOW CODE · VIBECODE</span>
+    </header>
+
+    <div class="my-auto grid grid-cols-12 gap-10 items-stretch h-[72vh] min-h-0">
+      <!-- Coluna Tipográfica -->
+      <div class="col-span-7 flex flex-col justify-between py-1">
+        <div class="space-y-5">
+          <div class="flex items-center gap-3">
+            <span class="accent-bar"></span>
+            <span class="text-base uppercase tracking-widest text-orange-400 font-bold">Estudo de Caso · NexusTech S.A.</span>
+          </div>
+
+          <h1 class="text-5xl xl:text-6xl font-light tracking-tight text-white leading-[1.1]">
+            HelpDesk AI &amp; <strong class="font-extrabold">Triagem Setorial</strong>
+          </h1>
+
+          <p class="text-2xl text-zinc-200 font-normal max-w-2xl leading-snug">
+            Classificação cognitiva de chamados de TI, cálculo dinâmico de <strong class="text-orange-400">Prioridade e SLA</strong> por setor e <strong class="text-orange-400">autoatendimento automático</strong> por e-mail.
+          </p>
+        </div>
+
+        <!-- Identificação Acadêmica -->
+        <div class="hairline-t pt-4">
+          <div class="text-sm uppercase tracking-widest text-zinc-300 font-semibold mb-3">Identificação do Projeto</div>
+          <div class="grid grid-cols-3 gap-5">
+            <div>
+              <div class="text-base font-mono font-bold text-orange-400">01 · AUTOR</div>
+              <div id="member-1" contenteditable="true" class="text-xl font-bold text-white mt-0.5">Gustavo Negreiros</div>
+            </div>
+            <div class="hairline-l pl-4">
+              <div class="text-base font-mono font-bold text-orange-400">02 · DOCENTE</div>
+              <div id="member-2" contenteditable="true" class="text-xl font-bold text-white mt-0.5">Profa. Kadidja Valéria</div>
+            </div>
+            <div class="hairline-l pl-4">
+              <div class="text-base font-mono font-bold text-orange-400">03 · REPOSITÓRIO</div>
+              <div id="member-3" contenteditable="true" class="text-xl font-bold text-white mt-0.5">sztsu/helpdesk-ai</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coluna Visual (Print Real do Make) -->
+      <div class="col-span-5 h-full min-h-0">
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)" title="Clique para ampliar">
+          <img src="{{IMG_MAKE_MAPPING}}" alt="Orquestração Make + Google Gemini AI" class="fit-contain" style="padding-bottom: 42px;" />
+          <div class="photo-caption">
+            Orquestração no Make: Sheets + Gemini 3.8 Flash + Gmail
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>Setas ← → para navegar · Tecla G (Índice) · Tecla F (Tela Cheia) · Clique nas imagens para ampliar</span>
+      <span class="font-mono font-bold text-base">01 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 02 — OVERVIEW (SUMÁRIO VISUAL)
+       ========================================================= -->
+  <section class="slide" data-title="Overview">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">01</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">Overview da Apresentação — Dinâmica do Projeto</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">4 ETAPAS · 8–10 MIN</span>
+    </header>
+
+    <div class="my-auto flex flex-col justify-between gap-5 h-[72vh] min-h-0">
+      <!-- 4 Colunas Minimalistas com Fonte Grande -->
+      <div class="grid grid-cols-4 gap-0 hairline-box h-52 shrink-0">
+        <div class="p-5 flex flex-col justify-between">
+          <div class="text-3xl font-bold font-mono text-orange-400">01</div>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-2">Cenário &amp; Problema</h3>
+            <p class="text-base text-zinc-200 leading-snug">
+              A empresa <strong>NexusTech S.A.</strong>, seus 5 setores e o gargalo da fila única de TI.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 hairline-l flex flex-col justify-between">
+          <div class="text-3xl font-bold font-mono text-orange-400">02</div>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-2">Matriz de Criticidade</h3>
+            <p class="text-base text-zinc-200 leading-snug">
+              Cruzamento <strong>Setor × Incidente</strong> para cálculo dinâmico de Prioridade (P1–P4) e SLA.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 hairline-l flex flex-col justify-between">
+          <div class="text-3xl font-bold font-mono text-orange-400">03</div>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-2">Arquitetura &amp; Make</h3>
+            <p class="text-base text-zinc-200 leading-snug">
+              Integração prática entre <strong>Google Forms, Sheets, Make e Gemini Flash</strong>.
+            </p>
+          </div>
+        </div>
+
+        <div class="p-5 hairline-l flex flex-col justify-between">
+          <div class="text-3xl font-bold font-mono text-orange-400">04</div>
+          <div>
+            <h3 class="text-xl font-bold text-white mb-2">Validação &amp; Crítica</h3>
+            <p class="text-base text-zinc-200 leading-snug">
+              Testes reais no Gmail, tratamento do erro 503, <strong>3 vantagens e 3 limitações</strong>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Faixa Fotográfica dos 4 Marcos Reais -->
+      <div class="grid grid-cols-4 gap-4 flex-1 min-h-0">
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)">
+          <img src="{{IMG_MAKE_SHEETS}}" alt="Módulo Google Sheets" class="fit-contain" style="padding-bottom: 36px;" />
+          <div class="photo-caption">1. Gatilho Google Sheets</div>
+        </div>
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)">
+          <img src="{{IMG_MAKE_GEMINI}}" alt="Módulo Gemini Flash" class="fit-contain" style="padding-bottom: 36px;" />
+          <div class="photo-caption">2. Motor Gemini 3.8 Flash</div>
+        </div>
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)">
+          <img src="{{IMG_MAKE_GMAIL}}" alt="Configuração Gmail" class="fit-contain" style="padding-bottom: 36px;" />
+          <div class="photo-caption">3. Disparo Automático Gmail</div>
+        </div>
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)">
+          <img src="{{IMG_EMAIL_RESULT}}" alt="E-mail de Triagem Recebido" class="fit-contain" style="padding-bottom: 36px;" />
+          <div class="photo-caption">4. E-mail Entregue ao Usuário</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>Da modelagem organizacional da empresa até a entrega automatizada do diagnóstico na caixa de entrada</span>
+      <span class="font-mono font-bold text-base">02 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 03 — O CENÁRIO CRIADO: NEXUSTECH S.A.
+       ========================================================= -->
+  <section class="slide" data-title="Cenário: NexusTech S.A.">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">02</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">O Cenário Criado — Empresa Hipotética NexusTech S.A.</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">CONTEXTO ORGANIZACIONAL</span>
+    </header>
+
+    <div class="my-auto grid grid-cols-12 gap-8 items-stretch h-[72vh] min-h-0">
+      <!-- Coluna Esquerda -->
+      <div class="col-span-6 flex flex-col justify-between">
+        <div class="space-y-2">
+          <div class="text-sm uppercase tracking-widest text-orange-400 font-bold">Por que criamos a NexusTech S.A.?</div>
+          <h3 class="text-2xl xl:text-3xl font-normal text-white leading-snug">
+            Em uma empresa real, a <strong class="font-extrabold text-orange-400">urgência de um chamado</strong> depende diretamente do <strong class="font-extrabold">setor impactado</strong>.
+          </h3>
+        </div>
+
+        <!-- 3 Números-Chave Grandes -->
+        <div class="grid grid-cols-3 gap-4 hairline-t hairline-b py-4">
+          <div>
+            <div class="text-3xl font-extrabold font-mono text-white">5 Setores</div>
+            <div class="text-base font-medium text-zinc-300 mt-1">Áreas corporativas</div>
+          </div>
+          <div class="hairline-l pl-4">
+            <div class="text-3xl font-extrabold font-mono text-orange-400">P1 a P4</div>
+            <div class="text-base font-medium text-zinc-300 mt-1">Níveis de prioridade</div>
+          </div>
+          <div class="hairline-l pl-4">
+            <div class="text-3xl font-extrabold font-mono text-white">15m–24h</div>
+            <div class="text-base font-medium text-zinc-300 mt-1">Janela de SLA</div>
+          </div>
+        </div>
+
+        <!-- Os 5 Setores da NexusTech -->
+        <div class="space-y-1.5 text-base">
+          <div class="text-zinc-300 uppercase tracking-wider font-bold text-sm mb-1">Os 5 Setores Modelados na NexusTech S.A.</div>
+          <div class="flex justify-between py-1.5 hairline-b">
+            <span class="font-mono text-orange-400 font-bold">S1 · Operações (NOC)</span>
+            <span class="text-white font-medium">Servidores e links de clientes finais</span>
+          </div>
+          <div class="flex justify-between py-1.5 hairline-b">
+            <span class="font-mono text-orange-400 font-bold">S2 · Financeiro</span>
+            <span class="text-white font-medium">Faturamento, ERP e notas fiscais</span>
+          </div>
+          <div class="flex justify-between py-1.5 hairline-b">
+            <span class="font-mono text-white font-bold">S3 · Engenharia / Dev</span>
+            <span class="text-zinc-200">Pipelines CI/CD, Git e homologação</span>
+          </div>
+          <div class="flex justify-between py-1.5 hairline-b">
+            <span class="font-mono text-white font-bold">S4 · Comercial e CX</span>
+            <span class="text-zinc-200">Vendas externas, CRM e ramais VoIP</span>
+          </div>
+          <div class="flex justify-between py-1.5">
+            <span class="font-mono text-zinc-300 font-bold">S5 · RH e Admin</span>
+            <span class="text-zinc-200">Rotinas internas e impressoras</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coluna Direita: Diagrama Arquitetural SVG (Estilo Engenharia) -->
+      <div class="col-span-6 hairline-box p-6 flex flex-col justify-between h-full min-h-0">
+        <div class="flex items-center justify-between">
+          <span class="text-sm font-mono font-bold text-orange-400 uppercase">TOPOLOGIA ORGANIZACIONAL</span>
+          <span class="text-sm font-mono text-zinc-300">PONDERAÇÃO DE IMPACTO</span>
+        </div>
+
+        <svg viewBox="0 0 480 310" class="w-full h-auto my-auto">
+          <!-- Setores à esquerda -->
+          <rect x="10" y="12" width="175" height="44" fill="#18181b" stroke="#fb923c" stroke-width="2"/>
+          <text x="22" y="31" fill="#fb923c" font-size="12" font-weight="bold" font-family="monospace">S1 · OPERAÇÕES / NOC</text>
+          <text x="22" y="47" fill="#ffffff" font-size="11" font-family="sans-serif">Impacto Crítico · SLA 15m</text>
+
+          <rect x="10" y="70" width="175" height="44" fill="#18181b" stroke="#fb923c" stroke-width="2"/>
+          <text x="22" y="89" fill="#fb923c" font-size="12" font-weight="bold" font-family="monospace">S2 · FINANCEIRO</text>
+          <text x="22" y="105" fill="#ffffff" font-size="11" font-family="sans-serif">Impacto Alto · SLA 30m</text>
+
+          <rect x="10" y="128" width="175" height="44" fill="#18181b" stroke="#a1a1aa" stroke-width="1.5"/>
+          <text x="22" y="147" fill="#ffffff" font-size="12" font-weight="bold" font-family="monospace">S3 · ENGENHARIA</text>
+          <text x="22" y="163" fill="#d4d4d8" font-size="11" font-family="sans-serif">Impacto Médio/Alto · SLA 2h</text>
+
+          <rect x="10" y="186" width="175" height="44" fill="#18181b" stroke="#a1a1aa" stroke-width="1.5"/>
+          <text x="22" y="205" fill="#ffffff" font-size="12" font-weight="bold" font-family="monospace">S4 · COMERCIAL / CX</text>
+          <text x="22" y="221" fill="#d4d4d8" font-size="11" font-family="sans-serif">Impacto Médio · SLA 4h</text>
+
+          <rect x="10" y="244" width="175" height="44" fill="#18181b" stroke="#52525b" stroke-width="1.5"/>
+          <text x="22" y="263" fill="#d4d4d8" font-size="12" font-weight="bold" font-family="monospace">S5 · RH &amp; ADMIN</text>
+          <text x="22" y="279" fill="#a1a1aa" font-size="11" font-family="sans-serif">Impacto Interno · SLA 24h</text>
+
+          <!-- Linhas convergindo -->
+          <line x1="185" y1="34" x2="255" y2="150" stroke="#fb923c" stroke-width="2"/>
+          <line x1="185" y1="92" x2="255" y2="150" stroke="#fb923c" stroke-width="2"/>
+          <line x1="185" y1="150" x2="255" y2="150" stroke="#a1a1aa" stroke-width="1.5"/>
+          <line x1="185" y1="208" x2="255" y2="150" stroke="#a1a1aa" stroke-width="1.5"/>
+          <line x1="185" y1="266" x2="255" y2="150" stroke="#52525b" stroke-width="1.5" stroke-dasharray="4,3"/>
+
+          <!-- Motor Central IA -->
+          <rect x="255" y="95" width="110" height="110" fill="#09090b" stroke="#fb923c" stroke-width="2.5"/>
+          <text x="310" y="132" text-anchor="middle" fill="#fb923c" font-size="13" font-weight="bold" font-family="monospace">HELPDESK AI</text>
+          <text x="310" y="152" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold" font-family="sans-serif">Setor × Falha</text>
+          <text x="310" y="172" text-anchor="middle" fill="#d4d4d8" font-size="11" font-family="monospace">Gemini Flash</text>
+
+          <!-- Saídas -->
+          <line x1="365" y1="125" x2="395" y2="85" stroke="#ffffff" stroke-width="2"/>
+          <line x1="365" y1="175" x2="395" y2="215" stroke="#fb923c" stroke-width="2"/>
+
+          <rect x="395" y="55" width="78" height="60" fill="#18181b" stroke="#ffffff" stroke-width="1.5"/>
+          <text x="434" y="80" text-anchor="middle" fill="#ffffff" font-size="12" font-weight="bold" font-family="monospace">SHEETS</text>
+          <text x="434" y="98" text-anchor="middle" fill="#d4d4d8" font-size="10" font-family="sans-serif">Fila + SLA</text>
+
+          <rect x="395" y="185" width="78" height="60" fill="#18181b" stroke="#fb923c" stroke-width="2"/>
+          <text x="434" y="210" text-anchor="middle" fill="#fb923c" font-size="12" font-weight="bold" font-family="monospace">GMAIL</text>
+          <text x="434" y="228" text-anchor="middle" fill="#ffffff" font-size="10" font-family="sans-serif">Guia 3 Passos</text>
+        </svg>
+
+        <div class="hairline-t pt-3 text-base text-zinc-200 leading-snug">
+          O mesmo sintoma técnico recebe <strong>SLAs diferentes</strong> dependendo do setor que abriu o chamado.
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>A criação da NexusTech S.A. permite demonstrar regras de negócio reais em vez de respostas genéricas</span>
+      <span class="font-mono font-bold text-base">03 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 04 — O PROBLEMA VS. A SOLUÇÃO
+       ========================================================= -->
+  <section class="slide" data-title="O Problema e a Solução">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">03</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">Diagnóstico do Problema vs. Proposta de Valor</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">JUSTIFICATIVA DO PROJETO</span>
+    </header>
+
+    <div class="my-auto grid grid-cols-3 gap-0 hairline-box h-[70vh] min-h-0">
+      <!-- Problema 1 -->
+      <div class="p-7 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-base font-mono font-bold text-orange-400 mb-3">
+            <span>GARGALO 01 · FILA LINEAR</span>
+            <span>ITSM</span>
+          </div>
+          <h3 class="text-3xl font-extrabold text-white tracking-tight">Cegueira Setorial</h3>
+          <div class="text-lg font-semibold text-zinc-300 mt-1 mb-6">Sem distinção de departamento</div>
+
+          <ul class="space-y-4 text-lg text-zinc-100 leading-snug">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Chamados caem em uma <strong>fila única</strong> por ordem de chegada</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Queda do ERP no <strong class="text-orange-400">Financeiro</strong> aguarda atrás de dúvidas simples do RH</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Analistas perdem horas lendo e classificando tickets manualmente</span>
+            </li>
+          </ul>
+        </div>
+        <div class="hairline-t pt-4 text-base font-mono font-semibold text-zinc-300">
+          Efeito: Atraso crítico em áreas de negócio
+        </div>
+      </div>
+
+      <!-- Problema 2 -->
+      <div class="p-7 hairline-l flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-base font-mono font-bold text-orange-400 mb-3">
+            <span>GARGALO 02 · VIÉS HUMANO</span>
+            <span>SLA</span>
+          </div>
+          <h3 class="text-3xl font-extrabold text-white tracking-tight">Urgência Subjetiva</h3>
+          <div class="text-lg font-semibold text-zinc-300 mt-1 mb-6">Quando o usuário escolhe a prioridade</div>
+
+          <ul class="space-y-4 text-lg text-zinc-100 leading-snug">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Usuários marcam quase qualquer incidente como <strong class="text-orange-400">"Urgente"</strong></span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Distorção completa dos Acordos de Nível de Serviço (<strong>SLAs</strong>)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Criar um backend tradicional próprio exige semanas de código e servidores</span>
+            </li>
+          </ul>
+        </div>
+        <div class="hairline-t pt-4 text-base font-mono font-semibold text-zinc-300">
+          Efeito: Sobrecarga no Suporte Nível 1
+        </div>
+      </div>
+
+      <!-- Solução -->
+      <div class="p-7 hairline-l flex flex-col justify-between bg-zinc-900">
+        <div>
+          <div class="flex items-center justify-between text-base font-mono font-bold text-orange-400 mb-3">
+            <span>SOLUÇÃO · HELPDESK AI</span>
+            <span>AUTOMÁTICO</span>
+          </div>
+          <h3 class="text-3xl font-extrabold text-white tracking-tight">Triagem Cognitiva</h3>
+          <div class="text-lg font-semibold text-orange-400 mt-1 mb-6">Business-Aware Triage sem Backend</div>
+
+          <ul class="space-y-4 text-lg text-zinc-100 leading-snug">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Cruza <strong>Setor + Relato Técnico</strong> via IA em menos de 30 segundos</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Define <strong class="text-orange-400">Categoria, Prioridade (P1–P4), SLA e Fila</strong> na planilha</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Envia e-mail imediato com <strong>3 passos práticos de autoatendimento</strong></span>
+            </li>
+          </ul>
+        </div>
+        <div class="hairline-t pt-4 text-base font-mono font-bold text-orange-400">
+          Resultado: Zero servidor · SLA imediato
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>O colaborador não escolhe a prioridade: ele informa seu Setor e a IA calcula a criticidade técnica real</span>
+      <span class="font-mono font-bold text-base">04 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 05 — MATRIZ DE CRITICIDADE POR SETOR
+       ========================================================= -->
+  <section class="slide" data-title="Matriz de Criticidade Setorial">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">04</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">Matriz de Criticidade — Ponderação Setor × Incidente</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">REGRAS DE NEGÓCIO DA IA</span>
+    </header>
+
+    <div class="my-auto flex flex-col justify-between gap-5 h-[72vh] min-h-0">
+      <!-- As 4 Saídas Padronizadas -->
+      <div class="grid grid-cols-4 gap-0 hairline-box shrink-0">
+        <div class="p-4">
+          <div class="text-base font-mono font-bold text-orange-400">SAÍDA 01</div>
+          <div class="text-xl font-bold text-white mt-1">Categoria Técnica</div>
+          <div class="text-base text-zinc-200 mt-1 leading-snug">Hardware, Software, Rede/Infra ou Acesso.</div>
+        </div>
+        <div class="p-4 hairline-l">
+          <div class="text-base font-mono font-bold text-orange-400">SAÍDA 02</div>
+          <div class="text-xl font-bold text-white mt-1">Prioridade (P1–P4)</div>
+          <div class="text-base text-zinc-200 mt-1 leading-snug">Ponderada pelo impacto estratégico do setor.</div>
+        </div>
+        <div class="p-4 hairline-l">
+          <div class="text-base font-mono font-bold text-orange-400">SAÍDA 03</div>
+          <div class="text-xl font-bold text-white mt-1">SLA Estimado</div>
+          <div class="text-base text-zinc-200 mt-1 leading-snug">Prazo alvo de atendimento (15 min a 24h).</div>
+        </div>
+        <div class="p-4 hairline-l">
+          <div class="text-base font-mono font-bold text-orange-400">SAÍDA 04</div>
+          <div class="text-xl font-bold text-white mt-1">Fila + Guia Técnico</div>
+          <div class="text-base text-zinc-200 mt-1 leading-snug">Escalonamento N1/N2 e 3 passos por e-mail.</div>
+        </div>
+      </div>
+
+      <!-- Tabela Grande dos 5 Setores -->
+      <div class="hairline-box p-5 flex-1 flex flex-col justify-center">
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-base uppercase tracking-wider text-zinc-200 font-bold">Parâmetros de Triagem por Setor na NexusTech S.A.</span>
+          <span class="text-base font-mono font-bold text-orange-400">Mesma falha ≠ Mesma prioridade</span>
+        </div>
+        <table class="w-full text-left border-collapse text-lg">
+          <thead>
+            <tr class="hairline-b text-sm uppercase tracking-wider text-zinc-300">
+              <th class="py-2.5 font-bold">Setor Corporativo</th>
+              <th class="py-2.5 font-bold">Impacto de Negócio</th>
+              <th class="py-2.5 font-bold">Prioridade</th>
+              <th class="py-2.5 font-bold">SLA Alvo</th>
+              <th class="py-2.5 font-bold">Fila Padrão</th>
+              <th class="py-2.5 font-bold">Exemplo de Incidente</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-700 text-white font-medium">
+            <tr>
+              <td class="py-2.5 font-bold text-orange-400">1. Operações e NOC</td>
+              <td class="py-2.5 text-base text-zinc-200">Serviço de clientes finais</td>
+              <td class="py-2.5 font-mono font-extrabold text-orange-400">P1 / P2</td>
+              <td class="py-2.5 font-mono font-bold">15m – 1h</td>
+              <td class="py-2.5 font-mono text-base">N2 Infra</td>
+              <td class="py-2.5 text-zinc-200 text-base">Queda de cluster ou perda de pacotes</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 font-bold text-orange-400">2. Financeiro</td>
+              <td class="py-2.5 text-base text-zinc-200">Faturamento e notas fiscais</td>
+              <td class="py-2.5 font-mono font-extrabold text-orange-400">P1 / P2</td>
+              <td class="py-2.5 font-mono font-bold">30m – 2h</td>
+              <td class="py-2.5 font-mono text-base">N2 Sistemas</td>
+              <td class="py-2.5 text-zinc-200 text-base">Erro ao emitir NF-e no sistema ERP</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 font-bold text-white">3. Engenharia e Dev</td>
+              <td class="py-2.5 text-base text-zinc-200">Esteiras CI/CD e deploy</td>
+              <td class="py-2.5 font-mono font-extrabold">P2 / P3</td>
+              <td class="py-2.5 font-mono">1h – 4h</td>
+              <td class="py-2.5 font-mono text-base">N2 Infra/Sist</td>
+              <td class="py-2.5 text-zinc-200 text-base">Bloqueio de chave SSH ou pipeline</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 font-bold text-white">4. Comercial e CX</td>
+              <td class="py-2.5 text-base text-zinc-200">Vendas e atendimento</td>
+              <td class="py-2.5 font-mono font-extrabold">P2 / P3</td>
+              <td class="py-2.5 font-mono">2h – 6h</td>
+              <td class="py-2.5 font-mono text-base">Nível 1 / N2</td>
+              <td class="py-2.5 text-zinc-200 text-base">Áudio picotando no VoIP ou CRM lento</td>
+            </tr>
+            <tr>
+              <td class="py-2.5 font-bold text-zinc-300">5. RH e Administrativo</td>
+              <td class="py-2.5 text-base text-zinc-200">Rotinas internas</td>
+              <td class="py-2.5 font-mono font-extrabold text-zinc-300">P3 / P4</td>
+              <td class="py-2.5 font-mono">4h – 24h</td>
+              <td class="py-2.5 font-mono text-base">Nível 1</td>
+              <td class="py-2.5 text-zinc-200 text-base">Impressora offline no corredor</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>Essa matriz de pesos foi embutida diretamente nas instruções de sistema (System Instructions) do modelo Gemini</span>
+      <span class="font-mono font-bold text-base">05 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 06 — O TRIPÉ TECNOLÓGICO: NO CODE, LOW CODE E VIBECODE
+       ========================================================= -->
+  <section class="slide" data-title="Tripé: No Code, Low Code e Vibecode">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">05</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">O Tripé Tecnológico — Plataforma e Justificativa</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">ESCOLHA DE FERRAMENTAS</span>
+    </header>
+
+    <div class="my-auto grid grid-cols-3 gap-0 hairline-box h-[70vh] min-h-0">
+      <!-- No Code -->
+      <div class="p-7 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-base font-mono font-bold text-orange-400 mb-3">
+            <span>CAMADA 01 · NO CODE</span>
+            <span>FRONTEND &amp; DB</span>
+          </div>
+          <h3 class="text-4xl font-extrabold text-white tracking-tight">Forms &amp; Sheets</h3>
+          <div class="text-lg font-semibold text-zinc-300 mt-1 mb-6">Portal de Entrada e Governança</div>
+
+          <ul class="space-y-4 text-lg text-zinc-100 leading-snug">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Formulário com <strong>lista suspensa fechada</strong> para os 5 setores da NexusTech</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Validação obrigatória de campos e formato de e-mail</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Persistência tabular automática nas <strong class="text-orange-400">Colunas A a F</strong> + coluna extra da IA</span>
+            </li>
+          </ul>
+        </div>
+        <div class="hairline-t pt-4 text-base font-mono font-semibold text-zinc-300">
+          Vantagem: Zero código HTML/SQL
+        </div>
+      </div>
+
+      <!-- Low Code -->
+      <div class="p-7 hairline-l flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-base font-mono font-bold text-orange-400 mb-3">
+            <span>CAMADA 02 · LOW CODE</span>
+            <span>ORQUESTRADOR</span>
+          </div>
+          <h3 class="text-4xl font-extrabold text-white tracking-tight">Make.com</h3>
+          <div class="text-lg font-semibold text-zinc-300 mt-1 mb-6">Automação Orientada a Eventos</div>
+
+          <ul class="space-y-4 text-lg text-zinc-100 leading-snug">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Superou o Zapier por permitir <strong class="text-orange-400">fluxos multi-etapas</strong> no plano gratuito (1.000 ops)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Conecta 4 módulos encadeados com inspeção visual de pacotes JSON</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Gerencia autenticação <strong>OAuth2 e chaves de API</strong> em cofre seguro</span>
+            </li>
+          </ul>
+        </div>
+        <div class="hairline-t pt-4 text-base font-mono font-semibold text-zinc-300">
+          Elo: Integração entre nuvens
+        </div>
+      </div>
+
+      <!-- Vibecode -->
+      <div class="p-7 hairline-l flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-base font-mono font-bold text-orange-400 mb-3">
+            <span>CAMADA 03 · VIBECODE</span>
+            <span>MOTOR IA</span>
+          </div>
+          <h3 class="text-4xl font-extrabold text-white tracking-tight">Gemini Flash</h3>
+          <div class="text-lg font-semibold text-zinc-300 mt-1 mb-6">Engenharia de Prompt Contextual</div>
+
+          <ul class="space-y-4 text-lg text-zinc-100 leading-snug">
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Substitui dezenas de blocos <code>if/else</code> por raciocínio semântico</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Interpreta termos leigos do usuário e pondera o peso do setor</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-orange-400 font-mono font-bold">—</span>
+              <span>Redige o diagnóstico e os <strong class="text-orange-400">3 passos de autoatendimento</strong> em segundos</span>
+            </li>
+          </ul>
+        </div>
+        <div class="hairline-t pt-4 text-base font-mono font-semibold text-zinc-300">
+          Núcleo: Inteligência cognitiva
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>Todas as ferramentas operam em suas camadas gratuitas (Free Tiers), resultando em custo zero de infraestrutura</span>
+      <span class="font-mono font-bold text-base">06 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 07 — IMPLEMENTAÇÃO: PLANILHA E GATILHO NO MAKE
+       ========================================================= -->
+  <section class="slide" data-title="Implementação: Sheets e Gatilho Make">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">06</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">Configuração da Plataforma — Módulo 1 e Conexão</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">GOOGLE SHEETS + MAKE</span>
+    </header>
+
+    <div class="my-auto grid grid-cols-12 gap-8 items-stretch h-[68vh] min-h-0">
+      <!-- Coluna Esquerda -->
+      <div class="col-span-6 flex flex-col justify-between gap-3 h-full min-h-0">
+        <div class="hairline-box p-4 flex-1 flex flex-col justify-between min-h-0">
+          <div>
+            <div class="text-sm font-mono font-bold text-orange-400 uppercase">01 · ESTRUTURA DA PLANILHA</div>
+            <h3 class="text-xl font-bold text-white mt-0.5 mb-1">Colunas do Forms + Governança IA</h3>
+          </div>
+          <div class="space-y-1 text-base text-zinc-100">
+            <div class="flex justify-between py-1 hairline-b">
+              <span class="text-orange-400 font-mono font-bold">Colunas A–C</span>
+              <span>Data/Hora, Nome e E-mail Corporativo</span>
+            </div>
+            <div class="flex justify-between py-1 hairline-b">
+              <span class="text-orange-400 font-mono font-bold">Coluna D</span>
+              <span>Setor Corporativo (5 opções fechadas)</span>
+            </div>
+            <div class="flex justify-between py-1 hairline-b">
+              <span class="text-orange-400 font-mono font-bold">Colunas E–F</span>
+              <span>Título e Descrição Detalhada da Falha</span>
+            </div>
+            <div class="flex justify-between py-1">
+              <span class="text-white font-mono font-bold">Coluna G (Extra)</span>
+              <span class="text-orange-400 font-bold">Diagnóstico gravado pela IA via Make</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hairline-box p-4 flex-1 flex flex-col justify-between min-h-0">
+          <div>
+            <div class="text-sm font-mono font-bold text-orange-400 uppercase">02 · MÓDULO 1 NO MAKE</div>
+            <h3 class="text-xl font-bold text-white mt-0.5 mb-1">Google Sheets: Watch New Rows</h3>
+            <p class="text-base text-zinc-200 leading-snug">
+              Monitora a aba <code>Respostas ao formulário 1</code> no intervalo <code>A1:Z1</code> e captura o <code>Row number</code> para atualização posterior.
+            </p>
+          </div>
+          <div class="grid grid-cols-2 gap-3 text-sm mt-1">
+            <div class="p-2.5 bg-zinc-900 border border-zinc-700">
+              <div class="font-bold text-white text-base">Autenticação</div>
+              <div class="text-zinc-200 mt-0.5">OAuth2 Google + <strong class="text-orange-400">API Key AI Studio</strong></div>
+            </div>
+            <div class="p-2.5 bg-zinc-900 border border-zinc-700">
+              <div class="font-bold text-white text-base">Segurança</div>
+              <div class="font-mono font-bold text-orange-400 text-sm mt-0.5">Credenciais fora do Git</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Coluna Direita: 2 Prints Reais do Make -->
+      <div class="col-span-6 grid grid-rows-2 gap-3 h-full min-h-0">
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)" title="Clique para ampliar">
+          <img src="{{IMG_MAKE_SHEETS}}" alt="Configuração Watch New Rows no Make" class="fit-contain" style="padding: 8px; padding-bottom: 38px;" />
+          <div class="photo-caption">
+            Módulo 1: Configuração do gatilho Watch New Rows no Make
+          </div>
+        </div>
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)" title="Clique para ampliar">
+          <img src="{{IMG_MAKE_APIKEY}}" alt="Conexão segura da API Key do Google Gemini" class="fit-contain" style="padding: 8px; padding-bottom: 38px;" />
+          <div class="photo-caption">
+            Módulo 2: Registro da chave de API no cofre criptografado do Make
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>Clique em qualquer captura de tela à direita para inspecionar em tela cheia</span>
+      <span class="font-mono font-bold text-base">07 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 08 — VIBECODE: ENGENHARIA DE PROMPT NO GEMINI
+       ========================================================= -->
+  <section class="slide" data-title="Vibecode: Engenharia de Prompt">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">07</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">Integração Vibecode — Engenharia de Prompt e Variáveis</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">GOOGLE GEMINI AI</span>
+    </header>
+
+    <div class="my-auto grid grid-cols-12 gap-8 items-stretch h-[72vh] min-h-0">
+      <!-- Coluna Esquerda -->
+      <div class="col-span-5 flex flex-col justify-between">
+        <div class="space-y-5">
+          <div class="pl-4 border-l-4 border-l-orange-400">
+            <div class="text-base font-mono font-bold text-orange-400">SYSTEM INSTRUCTIONS · CONTEXTO FIXO</div>
+            <h3 class="text-2xl font-bold text-white mt-0.5">Regras da NexusTech S.A.</h3>
+            <p class="text-lg text-zinc-200 mt-1 leading-snug">
+              Define o papel de especialista de TI, a tabela de pesos dos 5 setores e exige saída padronizada com <strong>Categoria, Prioridade, SLA, Fila e 3 passos</strong>.
+            </p>
+          </div>
+
+          <div class="pl-4 border-l-4 border-l-zinc-500">
+            <div class="text-base font-mono font-bold text-zinc-300">MESSAGES (PARTS) · PAYLOAD DINÂMICO</div>
+            <h3 class="text-2xl font-bold text-white mt-0.5">Mapeamento das Colunas</h3>
+            <p class="text-lg text-zinc-200 mt-1 leading-snug">
+              Injeta em cada execução os tokens dinâmicos vindos da planilha: <strong class="text-orange-400">Colaborador (B)</strong>, <strong class="text-orange-400">Setor (D)</strong>, <strong class="text-orange-400">Título (E)</strong> e <strong class="text-orange-400">Descrição (F)</strong>.
+            </p>
+          </div>
+        </div>
+
+        <!-- Diagrama Linear de Inferência -->
+        <div class="hairline-box p-3.5">
+          <div class="text-sm font-mono font-bold text-zinc-300 uppercase mb-2">Pipeline de Inferência no Módulo 2</div>
+          <svg viewBox="0 0 360 86" class="w-full h-auto">
+            <line x1="20" y1="43" x2="340" y2="43" stroke="#a1a1aa" stroke-width="2.5" stroke-dasharray="5,4"/>
+            <rect x="6" y="14" width="96" height="58" fill="#18181b" stroke="#4ade80" stroke-width="2"/>
+            <text x="54" y="39" text-anchor="middle" fill="#4ade80" font-size="13" font-weight="bold" font-family="monospace">BUNDLES</text>
+            <text x="54" y="58" text-anchor="middle" fill="#ffffff" font-size="12">Colunas B,D,E,F</text>
+
+            <rect x="126" y="14" width="108" height="58" fill="#18181b" stroke="#fb923c" stroke-width="2"/>
+            <text x="180" y="39" text-anchor="middle" fill="#fb923c" font-size="13" font-weight="bold" font-family="monospace">GEMINI FLASH</text>
+            <text x="180" y="58" text-anchor="middle" fill="#ffffff" font-size="12">System + User</text>
+
+            <rect x="258" y="14" width="96" height="58" fill="#18181b" stroke="#ffffff" stroke-width="2"/>
+            <text x="306" y="39" text-anchor="middle" fill="#ffffff" font-size="13" font-weight="bold" font-family="monospace">2. RESULT</text>
+            <text x="306" y="58" text-anchor="middle" fill="#d4d4d8" font-size="12">Texto Triado</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Coluna Direita: 2 Prints Reais do Módulo Gemini -->
+      <div class="col-span-7 grid grid-cols-2 gap-4 h-full min-h-0">
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)" title="Clique para ampliar">
+          <img src="{{IMG_MAKE_GEMINI}}" alt="Seleção do modelo Gemini e System Instructions" class="fit-contain" style="padding: 8px; padding-bottom: 38px;" />
+          <div class="photo-caption">
+            Seleção do modelo e System Instructions no Make
+          </div>
+        </div>
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)" title="Clique para ampliar">
+          <img src="{{IMG_MAKE_PARTS}}" alt="Mapeamento das variáveis verdes do Google Sheets" class="fit-contain" style="padding: 8px; padding-bottom: 38px;" />
+          <div class="photo-caption">
+            Mapeamento das variáveis da planilha no prompt User
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>O campo opcional Thought Signature foi mantido vazio por se tratar de inferência atômica por chamado (single-turn)</span>
+      <span class="font-mono font-bold text-base">08 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 09 — MÓDULOS 3 E 4: ATUALIZAÇÃO SHEETS E ENVIO GMAIL
+       ========================================================= -->
+  <section class="slide" data-title="Entrega: Update Row e Gmail">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">08</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">Encadeamento Final — Planilha de TI e Disparo Gmail</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">MÓDULOS 3 E 4 DO MAKE</span>
+    </header>
+
+    <div class="my-auto grid grid-cols-12 gap-8 items-stretch h-[72vh] min-h-0">
+      <!-- Coluna Esquerda -->
+      <div class="col-span-6 flex flex-col justify-between">
+        <div>
+          <p class="text-lg text-zinc-200 leading-snug mb-4">
+            A saída gerada pela IA (<strong class="text-orange-400">2. Result</strong>) alimenta simultaneamente a governança interna da TI e a notificação ao colaborador:
+          </p>
+
+          <div class="space-y-3.5">
+            <div class="hairline-box p-4 flex items-center justify-between">
+              <div>
+                <div class="text-xl font-bold text-white">Módulo 3 · Update a Row <span class="text-base font-mono text-orange-400 ml-2">SHEETS</span></div>
+                <div class="text-base text-zinc-200 mt-1">Usa o <strong>1. Row number</strong> para gravar a triagem na Coluna G.</div>
+              </div>
+              <div class="text-right font-mono shrink-0 ml-4">
+                <div class="text-xl font-extrabold text-orange-400">A2:G2</div>
+                <div class="text-sm font-bold text-zinc-300">1 célula gravada</div>
+              </div>
+            </div>
+
+            <div class="hairline-box p-4 flex items-center justify-between">
+              <div>
+                <div class="text-xl font-bold text-white">Módulo 4 · Send an Email <span class="text-base font-mono text-zinc-300 ml-2">GMAIL</span></div>
+                <div class="text-base text-zinc-200 mt-1">Destinatário dinâmico: <strong>1. E-mail Corporativo (C)</strong>.</div>
+              </div>
+              <div class="text-right font-mono shrink-0 ml-4">
+                <div class="text-xl font-extrabold text-white">2. Result</div>
+                <div class="text-sm font-bold text-zinc-300">Corpo do e-mail</div>
+              </div>
+            </div>
+
+            <div class="hairline-box p-4 flex items-center justify-between">
+              <div>
+                <div class="text-xl font-bold text-white">Consumo de Tokens <span class="text-base font-mono text-zinc-300 ml-2">TELEMETRIA</span></div>
+                <div class="text-base text-zinc-200 mt-1">Inspeção do bundle confirma baixa latência de execução.</div>
+              </div>
+              <div class="text-right font-mono shrink-0 ml-4">
+                <div class="text-xl font-extrabold text-orange-400">390 → 371</div>
+                <div class="text-sm font-bold text-zinc-300">Prompt / Saída</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-3.5 bg-zinc-900 border-l-4 border-l-orange-400 text-base text-white">
+          <strong class="text-orange-400">Ajuste de Integração Realizado:</strong> Mapeamento explícito da variável <code>2. Result</code> no campo <code>Content</code> e adequação ao modo <code>Raw HTML</code> do Gmail.
+        </div>
+      </div>
+
+      <!-- Coluna Direita: 2 Prints Reais do Módulo Gmail -->
+      <div class="col-span-6 grid grid-cols-2 gap-4 h-full min-h-0">
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)" title="Clique para ampliar">
+          <img src="{{IMG_MAKE_MAPPING}}" alt="Árvore de variáveis e telemetria no Make" class="fit-contain" style="padding: 6px; padding-bottom: 38px;" />
+          <div class="photo-caption">
+            Inspeção dos bundles de saída (Sheets + Gemini) no Make
+          </div>
+        </div>
+        <div class="photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)" title="Clique para ampliar">
+          <img src="{{IMG_MAKE_GMAIL}}" alt="Mapeamento final do módulo Gmail" class="fit-contain" style="padding: 6px; padding-bottom: 38px;" />
+          <div class="photo-caption">
+            Configuração final de envio com 2. Result mapeado em Content
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>O Make registra os metadados completos da execução (Model Version, Response ID e contagem de tokens)</span>
+      <span class="font-mono font-bold text-base">09 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 10 — TESTES REAIS, ERRO 503 E E-MAIL RECEBIDO
+       ========================================================= -->
+  <section class="slide" data-title="Evidências: Testes e E-mail Real">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">09</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">Validação e Testes — E-mail Recebido e Depuração</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">EVIDÊNCIAS DO PROTÓTIPO</span>
+    </header>
+
+    <div class="my-auto flex flex-col justify-between gap-4 h-[72vh] min-h-0">
+      <!-- Resumo do Caso de Teste Executado -->
+      <div class="grid grid-cols-4 gap-0 hairline-box shrink-0">
+        <div class="p-3.5">
+          <div class="text-sm font-mono font-bold text-orange-400">ENTRADA · SETOR</div>
+          <div class="text-lg font-bold text-white mt-0.5">Financeiro e Faturamento</div>
+          <div class="text-sm text-zinc-300">Falha ao emitir NF-e no ERP</div>
+        </div>
+        <div class="p-3.5 hairline-l">
+          <div class="text-sm font-mono font-bold text-orange-400">CLASSIFICAÇÃO IA</div>
+          <div class="text-lg font-bold text-white mt-0.5">Software (ERP)</div>
+          <div class="text-sm text-zinc-300">Comunicação de aplicação</div>
+        </div>
+        <div class="p-3.5 hairline-l">
+          <div class="text-sm font-mono font-bold text-orange-400">PRIORIDADE &amp; SLA</div>
+          <div class="text-lg font-extrabold font-mono text-orange-400 mt-0.5">P1 · SLA 30 min</div>
+          <div class="text-sm text-zinc-300">Alta criticidade financeira</div>
+        </div>
+        <div class="p-3.5 hairline-l">
+          <div class="text-sm font-mono font-bold text-orange-400">FILA &amp; AÇÃO</div>
+          <div class="text-lg font-bold text-white mt-0.5">Nível 2 Sistemas</div>
+          <div class="text-sm text-zinc-300">+ 3 passos (VPN, Sessão, Cache)</div>
+        </div>
+      </div>
+
+      <!-- 2 Prints Reais Grandes: E-mail Recebido + Tratamento do Erro 503 -->
+      <div class="grid grid-cols-12 gap-5 flex-1 min-h-0">
+        <div class="col-span-7 photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)" title="Clique para ampliar">
+          <img src="{{IMG_EMAIL_RESULT}}" alt="E-mail real recebido no Gmail com triagem P1" class="fit-contain" style="padding: 10px; padding-bottom: 42px;" />
+          <div class="photo-caption">
+            Evidência 1: E-mail real entregue pelo HelpDesk AI (Prioridade P1, SLA 30 min e Guia)
+          </div>
+        </div>
+
+        <div class="col-span-5 photo-frame" style="background: #ffffff; cursor: zoom-in;" onclick="openZoom(this.querySelector('img').src)" title="Clique para ampliar">
+          <img src="{{IMG_MAKE_503}}" alt="Log real do erro HTTP 503 High Demand tratado durante os testes" class="fit-contain" style="padding: 10px; padding-bottom: 42px;" />
+          <div class="photo-caption">
+            Evidência 2: Depuração do erro HTTP 503 (High Demand) na API gratuita
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>O erro 503 durante os testes comprovou na prática as limitações de disponibilidade de modelos gratuitos em horários de pico</span>
+      <span class="font-mono font-bold text-base">10 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 11 — REFLEXÃO CRÍTICA: 3 VANTAGENS E 3 LIMITAÇÕES
+       ========================================================= -->
+  <section class="slide" data-title="Reflexão Crítica: Vantagens e Limitações">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">10</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">Reflexão Crítica — 3 Vantagens e 3 Limitações</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">ANÁLISE CRÍTICA OBRIGATÓRIA</span>
+    </header>
+
+    <div class="my-auto grid grid-cols-2 gap-8 items-stretch h-[72vh] min-h-0">
+      <!-- 3 Vantagens -->
+      <div class="hairline-box p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between hairline-b pb-3">
+          <div>
+            <span class="text-sm font-mono font-bold text-orange-400">PONTOS FORTES</span>
+            <h3 class="text-2xl font-extrabold text-white">3 Vantagens Comprovadas</h3>
+          </div>
+          <span class="text-base font-mono font-bold text-orange-400">EFICIÊNCIA</span>
+        </div>
+
+        <div class="space-y-4 my-auto">
+          <div class="pl-4 border-l-4 border-l-orange-400">
+            <div class="text-lg font-bold text-white">1. Priorização Sensível ao Negócio</div>
+            <p class="text-base text-zinc-200 mt-0.5 leading-snug">
+              Elimina a subjetividade do solicitante ao ponderar automaticamente a criticidade do setor na NexusTech S.A.
+            </p>
+          </div>
+
+          <div class="pl-4 border-l-4 border-l-orange-400">
+            <div class="text-lg font-bold text-white">2. Redução Radical do SLA Nível 1</div>
+            <p class="text-base text-zinc-200 mt-0.5 leading-snug">
+              Entrega instruções técnicas personalizadas em menos de 30 segundos, permitindo resolução autônoma imediata.
+            </p>
+          </div>
+
+          <div class="pl-4 border-l-4 border-l-orange-400">
+            <div class="text-lg font-bold text-white">3. Time-to-Market e Custo Zero</div>
+            <p class="text-base text-zinc-200 mt-0.5 leading-snug">
+              Protótipo funcional construído em horas usando exclusivamente camadas gratuitas (Google, Make e Gemini API).
+            </p>
+          </div>
+        </div>
+
+        <div class="hairline-t pt-3 text-base font-mono text-zinc-300">
+          Ganho direto: Agilidade de validação de MVP
+        </div>
+      </div>
+
+      <!-- 3 Limitações -->
+      <div class="hairline-box p-6 flex flex-col justify-between">
+        <div class="flex items-center justify-between hairline-b pb-3">
+          <div>
+            <span class="text-sm font-mono font-bold text-orange-400">DESAFIOS ENFRENTADOS</span>
+            <h3 class="text-2xl font-extrabold text-white">3 Limitações Técnicas</h3>
+          </div>
+          <span class="text-base font-mono font-bold text-zinc-300">MITIGAÇÕES</span>
+        </div>
+
+        <div class="space-y-4 my-auto">
+          <div class="pl-4 border-l-4 border-l-zinc-500">
+            <div class="text-lg font-bold text-white">1. Risco de Alucinação em Relatos Vagos</div>
+            <p class="text-base text-zinc-200 mt-0.5 leading-snug">
+              Relatos curtos podem gerar passos genéricos. <strong class="text-orange-400">Mitigação:</strong> Guardrails no prompt restritos a 3 ações seguras de Nível 1.
+            </p>
+          </div>
+
+          <div class="pl-4 border-l-4 border-l-zinc-500">
+            <div class="text-lg font-bold text-white">2. Quotas e Erro 503 em Planos Gratuitos</div>
+            <p class="text-base text-zinc-200 mt-0.5 leading-snug">
+              Limite de 1.000 ops/mês no Make e picos de demanda (<code>HTTP 503</code>) na API gratuita do modelo.
+            </p>
+          </div>
+
+          <div class="pl-4 border-l-4 border-l-zinc-500">
+            <div class="text-lg font-bold text-white">3. Governança e Privacidade (LGPD)</div>
+            <p class="text-base text-zinc-200 mt-0.5 leading-snug">
+              Dados de chamados trafegam em nuvens públicas; uso corporativo real exige anonimização e instâncias privadas.
+            </p>
+          </div>
+        </div>
+
+        <div class="hairline-t pt-3 text-base font-mono text-zinc-300">
+          Supervisão humana mantida na planilha da TI
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>Nenhuma resposta da IA executa alterações destrutivas automatizadas sem validação da equipe técnica</span>
+      <span class="font-mono font-bold text-base">11 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       SLIDE 12 — SÍNTESE EXECUTIVA E PRÓXIMOS PASSOS
+       ========================================================= -->
+  <section class="slide" data-title="Próximos Passos e Conclusão">
+    <header class="flex items-center justify-between hairline-b pb-3">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-mono font-bold text-orange-400">11</span>
+        <h2 class="text-2xl font-bold tracking-wide text-white uppercase">Síntese Executiva e Próximos Passos</h2>
+      </div>
+      <span class="text-base font-mono font-semibold text-zinc-300">CONCLUSÃO E ROADMAP</span>
+    </header>
+
+    <div class="my-auto flex flex-col justify-between gap-6 h-[72vh] min-h-0">
+      <div class="grid grid-cols-2 gap-0 hairline-box flex-1">
+        <div class="p-7 hairline-b flex flex-col justify-center">
+          <div class="text-base font-mono font-bold text-orange-400 mb-2">EVOLUÇÃO 01 · ROTEAMENTO DE EMERGÊNCIA</div>
+          <h3 class="text-2xl font-extrabold text-white mb-2">Alertas P1 no Slack e Teams</h3>
+          <p class="text-lg text-zinc-200 leading-snug">
+            Adicionar um módulo <strong>Router</strong> no Make para disparar notificações em tempo real à equipe de plantão sempre que um chamado for classificado como <strong>P1</strong>.
+          </p>
+        </div>
+
+        <div class="p-7 hairline-b hairline-l flex flex-col justify-center">
+          <div class="text-base font-mono font-bold text-orange-400 mb-2">EVOLUÇÃO 02 · CONHECIMENTO INTERNO</div>
+          <h3 class="text-2xl font-extrabold text-white mb-2">Integração RAG com Manuais</h3>
+          <p class="text-lg text-zinc-200 leading-snug">
+            Conectar o modelo Gemini à documentação oficial da <strong>NexusTech S.A.</strong> (<em>Retrieval-Augmented Generation</em>) para procedimentos exatos dos sistemas internos.
+          </p>
+        </div>
+
+        <div class="p-7 flex flex-col justify-center">
+          <div class="text-base font-mono font-bold text-orange-400 mb-2">EVOLUÇÃO 03 · ESCALABILIDADE ITSM</div>
+          <h3 class="text-2xl font-extrabold text-white mb-2">Conexão com Jira / GLPI</h3>
+          <p class="text-lg text-zinc-200 leading-snug">
+            Evoluir a persistência em planilha para integração via API REST com plataformas corporativas de controle de SLA e inventário de ativos.
+          </p>
+        </div>
+
+        <div class="p-7 hairline-l flex flex-col justify-center">
+          <div class="text-base font-mono font-bold text-orange-400 mb-2">CONCLUSÃO · APRENDIZADO CENTRAL</div>
+          <h3 class="text-2xl font-extrabold text-white mb-2">Sinergia No / Low / Vibecode</h3>
+          <p class="text-lg text-zinc-200 leading-snug">
+            O projeto comprovou que a união de plataformas visuais e IA generativa permite construir sistemas cognitivos complexos com agilidade e custo zero.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between pt-1 shrink-0">
+        <div>
+          <div class="text-3xl font-bold text-white">Obrigado pela atenção!</div>
+          <div class="text-base text-zinc-300 mt-1">Gustavo Negreiros · Tendências em Ciência da Computação · UDF</div>
+        </div>
+        <div class="text-right font-mono text-base font-bold text-orange-400">
+          <div>github.com/sztsu/helpdesk-ai</div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="flex items-center justify-between hairline-t pt-3 text-sm font-medium text-zinc-300">
+      <span>Documentação completa, links do Forms/Sheets e etapas de desenvolvimento disponíveis no GitHub</span>
+      <span class="font-mono font-bold text-base">12 / 12</span>
+    </footer>
+  </section>
+
+  <!-- =========================================================
+       MODAL DE ÍNDICE DE SLIDES (TECLA G)
+       ========================================================= -->
+  <div id="grid-modal" class="fixed inset-0 bg-zinc-950/95 z-50 hidden flex-col p-10 overflow-y-auto">
+    <div class="flex items-center justify-between hairline-b pb-4 mb-6">
+      <span class="text-base font-mono font-bold uppercase tracking-widest text-zinc-200">Índice de Slides</span>
+      <button onclick="toggleGrid()" class="text-sm font-mono font-bold text-zinc-200 hover:text-white px-4 py-1.5 hairline-box">
+        FECHAR [ESC]
+      </button>
+    </div>
+    <div id="grid-container" class="grid grid-cols-4 gap-4"></div>
+  </div>
+
+  <!-- =========================================================
+       MODAL DE ZOOM DE IMAGEM (CLIQUE NAS CAPTURAS DE TELA)
+       ========================================================= -->
+  <div id="zoom-modal" onclick="closeZoom()" class="fixed inset-0 bg-zinc-950/95 z-50 hidden items-center justify-center p-6" style="cursor: zoom-out;">
+    <div class="w-full h-full flex items-center justify-center" style="background: #ffffff; border: 2px solid #fb923c; padding: 16px; position: relative;">
+      <img id="zoom-img" src="" alt="Zoom" style="max-width: 100%; max-height: 100%; object-fit: contain;" />
+      <span style="position: absolute; top: 12px; right: 16px; background: #09090b; color: #fb923c; padding: 6px 12px; font-family: monospace; font-weight: 700; font-size: 14px; border: 1.5px solid #3f3f46;">FECHAR [CLIQUE OU ESC]</span>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       CONTROLES NO CANTO INFERIOR
+       ========================================================= -->
+  <div id="nav-bar" class="fixed bottom-2.5 left-1/2 -translate-x-1/2 z-40 flex items-center gap-1 px-4 py-1 hairline-box text-sm font-mono font-bold text-zinc-300">
+    <button onclick="prev()" class="px-2.5 py-1 hover:text-white transition" title="Anterior (←)">←</button>
+    <button onclick="toggleGrid()" id="counter" class="px-3 py-1 text-white hover:text-orange-400 transition" title="Índice (G)">01 / 12</button>
+    <button onclick="next()" class="px-2.5 py-1 hover:text-white transition" title="Próximo (→)">→</button>
+    <span class="text-zinc-600">|</span>
+    <button onclick="toggleGrid()" class="px-2.5 py-1 hover:text-white transition">ÍNDICE</button>
+    <button onclick="toggleFS()" class="px-2.5 py-1 hover:text-white transition">TELA CHEIA</button>
+    <button onclick="window.print()" class="px-2.5 py-1 text-orange-400 hover:text-orange-300 transition">PDF</button>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const progress = document.getElementById('progress');
+    const counter = document.getElementById('counter');
+    const gridModal = document.getElementById('grid-modal');
+    const gridContainer = document.getElementById('grid-container');
+    const zoomModal = document.getElementById('zoom-modal');
+    const zoomImg = document.getElementById('zoom-img');
+    let idx = 0;
+
+    function openZoom(src) {
+      zoomImg.src = src;
+      zoomModal.classList.remove('hidden');
+      zoomModal.classList.add('flex');
+    }
+    function closeZoom() {
+      zoomModal.classList.add('hidden');
+      zoomModal.classList.remove('flex');
+    }
+
+    function go(n) {
+      if (n < 0 || n >= slides.length) return;
+      slides[idx].classList.remove('active');
+      idx = n;
+      slides[idx].classList.add('active');
+      progress.style.width = (((idx + 1) / slides.length) * 100) + '%';
+      counter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(slides.length).padStart(2, '0');
+    }
+
+    function next() { if (idx < slides.length - 1) go(idx + 1); }
+    function prev() { if (idx > 0) go(idx - 1); }
+
+    function toggleFS() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+      } else {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function toggleGrid() {
+      if (gridModal.classList.contains('hidden')) {
+        gridContainer.innerHTML = '';
+        slides.forEach((s, i) => {
+          const btn = document.createElement('button');
+          btn.className = 'p-4 text-left hairline-box hover:border-orange-400 transition flex flex-col justify-between h-28 ' +
+            (i === idx ? 'border-orange-400' : '');
+          btn.innerHTML = `
+            <span class="text-sm font-mono font-bold text-orange-400">${String(i + 1).padStart(2, '0')}</span>
+            <span class="text-base font-bold text-white">${s.getAttribute('data-title')}</span>
+          `;
+          btn.onclick = () => { go(i); toggleGrid(); };
+          gridContainer.appendChild(btn);
+        });
+        gridModal.classList.remove('hidden');
+        gridModal.classList.add('flex');
+      } else {
+        gridModal.classList.add('hidden');
+        gridModal.classList.remove('flex');
+      }
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (document.activeElement && document.activeElement.getAttribute('contenteditable') === 'true') {
+        if (e.key === 'Escape') document.activeElement.blur();
+        return;
+      }
+      if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); next(); }
+      else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+      else if (e.key === 'Home') { e.preventDefault(); go(0); }
+      else if (e.key === 'End') { e.preventDefault(); go(slides.length - 1); }
+      else if (e.key === 'g' || e.key === 'G') { e.preventDefault(); toggleGrid(); }
+      else if (e.key === 'f' || e.key === 'F') { e.preventDefault(); toggleFS(); }
+      else if (e.key === 'Escape') {
+        if (!zoomModal.classList.contains('hidden')) closeZoom();
+        else if (!gridModal.classList.contains('hidden')) toggleGrid();
+      }
+    });
+
+    ['member-1', 'member-2', 'member-3'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      try {
+        const saved = localStorage.getItem('helpdesk_team_' + id);
+        if (saved) el.textContent = saved;
+        el.addEventListener('input', () => localStorage.setItem('helpdesk_team_' + id, el.textContent));
+      } catch (_) {}
+    });
+  </script>
+</body>
+</html>

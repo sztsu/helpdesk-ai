@@ -8,6 +8,17 @@
 
 ---
 
+### Links de Acesso Rápido ao Protótipo
+
+| Recurso Oficial | Link de Acesso Direto | Finalidade no Projeto |
+| :--- | :--- | :--- |
+| **Formulário de Abertura de Chamados** | [Google Forms — NexusTech S.A.](https://docs.google.com/forms/d/e/1FAIpQLScvJ9kLyNEA24scTzgwMxT70fgD8yKDRmFDDphdJrqPS7DXJA/viewform?usp=publish-editor) | Portal No Code para abertura de chamados com seleção dos 5 setores |
+| **Planilha de Governança e Triagem** | [Google Sheets — Fila de Tickets](https://docs.google.com/spreadsheets/d/1wQwLty4UdgL0f-Vay306g_o7PP_l3d6vIycTtGo4vec/edit?usp=sharing) | Base central de dados com classificação da IA e formatação condicional |
+| **Apresentação Executiva (PDF 16:9)** | [Baixar Apresentacao_HelpDesk_AI.pdf](slides/Apresentacao_HelpDesk_AI.pdf) | Slides no padrão editorial técnico para apresentação e avaliação |
+| **Apresentação Interativa (HTML)** | [slides/pitch_deck.html](slides/pitch_deck.html) | Deck interativo 100% offline para navegação direta no navegador |
+
+---
+
 ## Sumário
 - [1. Cenário Corporativo e Descrição do Desafio](#1-cenário-corporativo-e-descrição-do-desafio)
 - [2. Estrutura Organizacional e Matriz de Criticidade por Setor](#2-estrutura-organizacional-e-matriz-de-criticidade-por-setor)
@@ -91,11 +102,13 @@ flowchart LR
 
 ## 5. Evidências do Protótipo Funcional
 
-* **Formulário de Abertura de Chamados (No Code):**  
-  [Acessar Formulário de Suporte — NexusTech S.A.](https://docs.google.com/forms/d/e/1FAIpQLScvJ9kLyNEA24scTzgwMxT70fgD8yKDRmFDDphdJrqPS7DXJA/viewform?usp=publish-editor)
+* **Formulário de Abertura de Chamados — Google Forms (No Code):**  
+  [Acessar Formulário de Suporte — NexusTech S.A.](https://docs.google.com/forms/d/e/1FAIpQLScvJ9kLyNEA24scTzgwMxT70fgD8yKDRmFDDphdJrqPS7DXJA/viewform?usp=publish-editor)  
+  `https://docs.google.com/forms/d/e/1FAIpQLScvJ9kLyNEA24scTzgwMxT70fgD8yKDRmFDDphdJrqPS7DXJA/viewform?usp=publish-editor`
 
-* **Planilha de Governança e Triagem por Setor (Database):**  
-  [Acessar Planilha de Chamados — NexusTech S.A.](https://docs.google.com/spreadsheets/d/1wQwLty4UdgL0f-Vay306g_o7PP_l3d6vIycTtGo4vec/edit?usp=sharing)
+* **Planilha de Governança e Triagem — Google Sheets (Database):**  
+  [Acessar Planilha de Chamados — NexusTech S.A.](https://docs.google.com/spreadsheets/d/1wQwLty4UdgL0f-Vay306g_o7PP_l3d6vIycTtGo4vec/edit?usp=sharing)  
+  `https://docs.google.com/spreadsheets/d/1wQwLty4UdgL0f-Vay306g_o7PP_l3d6vIycTtGo4vec/edit?usp=sharing`
 
 ### Galeria de Capturas de Tela do Protótipo Operacional:
 

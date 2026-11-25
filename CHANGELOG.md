@@ -15,7 +15,9 @@ Todas as mudanças relevantes deste projeto são documentadas neste arquivo segu
     4. *Camada 4 — Ação (Tools):* execução estruturada e auditável de ferramentas JSON (`sanitize_pii`, `search_knowledge_base`, `evaluate_business_sla`, `create_ticket`, `query_ticket_status`, `activate_fallback_contingency`).
   * **Licença Social para Operar (Córdova, 2025):** trilha de *Accountability* persistente e botão **Contestar decisão da IA** (*Pilar 3: Remediação*).
   * **Integração Opcional Live Gemini API (`gemini-2.5-flash`):** chave armazenada apenas em `sessionStorage` com fallback automático para o motor local em caso de erro `HTTP 503`.
-  * **Painel de Testes Automatizados (`TC-01` a `TC-09`):** validação executável de cenários funcionais, adversariais, de privacidade e de stress (20 chamados concorrentes + simulação `HTTP 503`).
+  * **Painel de Testes Automatizados (`TC-01` a `TC-24`):** validação executável de 24 cenários (funcionais, viés algorítmico e invariância de gênero/linguagem informal, 5 ataques adversariais, mascaramento PII/LGPD, Aging, Remediação, diálogo em 2 turnos, fallback `HTTP 503` e rajada de 30 chamados em `16 ms`).
+  * **Comparativo de Ferramentas de Chatbot:** avaliação formal entre Dialogflow CX, Botpress, Typebot, Rasa e nossa stack customizada em `docs/03_arquitetura_agente_e_dados.md`.
+  * **Capturas Reais v2.0:** adicionadas em `docs/images/v2_chatbot_4layers.png`, `v2_queue_equity.png` e `v2_tests_24.png`.
   * **Exportação de Backup JSON** na aba *Fila & Equidade*.
 * **Documentação Modular Padrão TCC (`docs/01` a `docs/07`):**
   * Visão geral, escopo e regras de negócio (`01`).

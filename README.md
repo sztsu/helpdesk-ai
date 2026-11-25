@@ -14,13 +14,16 @@
 
 | Recurso | Link Direto | Descrição |
 | :--- | :--- | :--- |
-| **Aplicação Web — Chatbot & Agente (`index.html`)** | [Abrir HelpDesk AI 2.0 (GitHub Pages)](https://sztsu.github.io/helpdesk-ai/) | Interface completa com Chatbot, telemetria das 4 camadas, fila de equidade e 9 testes automatizados (abre também localmente via [`index.html`](index.html)) |
+| **Aplicação Web — Chatbot & Agente (`index.html`)** | [Abrir HelpDesk AI 2.0 (GitHub Pages)](https://sztsu.github.io/helpdesk-ai/) | Interface completa com Chatbot, telemetria das 4 camadas, fila de equidade e 24 testes automatizados (abre também localmente via [`index.html`](index.html)) |
 | **Formulário de Chamados (v1.0 — No Code)** | [Google Forms — NexusTech S.A.](https://docs.google.com/forms/d/e/1FAIpQLScvJ9kLyNEA24scTzgwMxT70fgD8yKDRmFDDphdJrqPS7DXJA/viewform?usp=publish-editor) | Portal de submissão com lista fechada dos 5 setores |
 | **Planilha de Governança (v1.0 — Database)** | [Google Sheets — Fila de Tickets](https://docs.google.com/spreadsheets/d/1wQwLty4UdgL0f-Vay306g_o7PP_l3d6vIycTtGo4vec/edit?usp=sharing) | Base tabular atualizada via Make + `Parse JSON` com cores condicionais |
 | **Apresentação Executiva (PDF 16:9)** | [slides/Apresentacao_HelpDesk_AI.pdf](slides/Apresentacao_HelpDesk_AI.pdf) | 12 slides no padrão editorial técnico (dark mode) |
 | **Apresentação Interativa (HTML Offline)** | [slides/pitch_deck.html](slides/pitch_deck.html) | Versão executável offline no navegador |
 
 ---
+
+* **Interface Web v2.0 (Chatbot + Telemetria Ao Vivo das 4 Camadas do Agente):**
+  ![Chatbot HelpDesk AI 2.0 com 4 Camadas, Filtro LGPD e Remediação](docs/images/v2_chatbot_4layers.png)
 
 ## Índice Completo da Documentação (Padrão TCC + Conteúdo A1)
 
@@ -68,8 +71,17 @@ O sistema foi arquitetado no modelo *Zero-Build* para que qualquer avaliador pos
    ```
 3. **Na interface:**
    * Use os **cenários rápidos** no topo do chat para testar NOC (P1), Financeiro com CPF/senha (mascaramento LGPD), RH (P4), Relato Vago (controle multi-turno) e ataques adversariais (*Prompt Injection* e pedido destrutivo).
-   * Clique em **Testes Adversariais & Stress** > **Executar Suíte Completa (9 Testes)** para validar ao vivo os 9 cenários automatizados.
+   * Clique em **Testes Adversariais & Stress** > **Executar Suíte Completa (24 Testes)** para validar ao vivo os 24 cenários automatizados (funcionais, viés, adversariais, LGPD, equidade e carga).
    * *(Opcional)* Clique em **Agente Local** no canto superior direito para inserir uma chave gratuita da API Google Gemini (armazenada apenas em `sessionStorage`).
+
+---
+
+## Evidências da Interface Web v2.0 (Fila, Equidade e 24/24 Testes)
+
+1. **Fila Operacional, Auditoria de Equidade (Aging), Remediação e Trilha de Accountability:**
+   ![Fila de Chamados, Equidade e Accountability](docs/images/v2_queue_equity.png)
+2. **Painel de Avaliação Crítica (Mello, 2024) com 24 de 24 Testes Aprovados:**
+   ![Painel com 24 Testes Automatizados Aprovados](docs/images/v2_tests_24.png)
 
 ---
 

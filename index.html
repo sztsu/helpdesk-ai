@@ -236,7 +236,7 @@
         </div>
         <div style="display: flex; gap: 8px;">
           <button class="btn" id="btnToggle503">Simular Erro HTTP 503: OFF</button>
-          <button class="btn btn-accent" id="btnRunAllTests">Executar Suíte Completa (9 Testes)</button>
+          <button class="btn btn-accent" id="btnRunAllTests">Executar Suíte Completa (24 Testes)</button>
         </div>
       </div>
 
@@ -250,7 +250,7 @@
         <div class="panel-card">
           <div class="section-kick">Dimensão 02 &middot; Robustez</div>
           <h3>Defesa Adversarial &amp; Stress</h3>
-          <p>Testes intencionais de Prompt Injection, comandos destrutivos, vazamento de PII, relatos vagos e rajada de carga com fallback automático em HTTP 503.</p>
+          <p>Testes intencionais de Prompt Injection, comandos destrutivos, vazamento de PII, relatos vagos, viés algorítmico e rajada de carga com fallback HTTP 503.</p>
           <div class="mono" style="font-size: 12px; color: var(--accent);" id="metricRobust">Status: Clique em Executar Suíte</div>
         </div>
         <div class="panel-card">
@@ -276,7 +276,7 @@
           <tbody id="testResultsBody">
             <tr>
               <td colspan="6" style="text-align: center; padding: 24px; color: var(--ink-3);">
-                Clique em <strong>Executar Suíte Completa (9 Testes)</strong> para validar ao vivo os cenários funcionais, adversariais, de privacidade e de stress.
+                Clique em <strong>Executar Suíte Completa (24 Testes)</strong> para validar ao vivo cenários funcionais, de viés, adversariais, privacidade e stress.
               </td>
             </tr>
           </tbody>
@@ -545,7 +545,7 @@
         "</div>";
     }
 
-    const engineMeta = res.trace ? res.trace.engine + " &middot; " + res.trace.latencyMs + " ms" : "HelpDesk AI 2.0";
+    const engineMeta = res.trace ? res.trace.engine + " · " + res.trace.latencyMs + " ms" : "HelpDesk AI 2.0";
     el.innerHTML =
       '<div class="msg-meta">HelpDesk AI &middot; ' + escapeHtml(engineMeta) + "</div>" +
       '<div class="msg-bubble">' + body + "</div>";
@@ -817,6 +817,25 @@
   syncEngineBadge();
   seedWelcome();
   renderQueue();
+
+  // Optional direct view / live demo query parameter (?demo=chat | queue | tests)
+  (async function () {
+    const params = new URLSearchParams(window.location.search);
+    const demo = params.get("demo");
+    if (demo === "chat") {
+      selectSector.value = "financeiro";
+      await handleSend("O sistema ERP travou ao emitir notas fiscais no fechamento. Meu CPF 123.456.789-00 e senha é Fin2026.");
+    } else if (demo === "queue") {
+      selectSector.value = "financeiro";
+      await handleSend("O sistema ERP travou ao emitir notas fiscais no fechamento. Meu CPF 123.456.789-00.");
+      agent.runEquityAgingAudit();
+      agent.contestTicket("HD-2026-003", "Folha salarial do mês travada com prazo legal hoje.");
+      switchView("queue");
+    } else if (demo === "tests") {
+      switchView("tests");
+      document.getElementById("btnRunAllTests").click();
+    }
+  })();
 })();
 </script>
 </body>

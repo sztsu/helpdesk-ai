@@ -108,6 +108,21 @@ sequenceDiagram
 | **Automação em Nuvem (v1.0)** | Google Forms, Google Sheets, Make.com (`Parse JSON`) e Gmail | Esteira assíncrona No Code / Low Code integrada para coleta via formulário, planilha colorida e despacho de e-mail HTML. |
 | **Hospedagem e Versionamento** | Git, GitHub e GitHub Pages | Controle de versão, documentação técnica e publicação direta do `index.html`. |
 
+### 4.1 Comparativo de Ferramentas de Chatbot (Avaliação 12/nov)
+
+Antes de implementar a interface conversacional da versão 2.0, avaliamos as principais ferramentas de mercado para construção de chatbots corporativos em relação às restrições acadêmicas e técnicas do projeto (custo zero, transparência das 4 camadas do agente, privacidade PII pré-envio e facilidade de execução pela banca):
+
+| Ferramenta de Chatbot | Tipo / Paradigma | Pontos Fortes | Limitações para o HelpDesk AI 2.0 | Decisão |
+| :--- | :--- | :--- | :--- | :--- |
+| **Google Dialogflow CX** | Low Code / NLU Gerenciado | Fluxos visuais maduros, integração telefonia/Google Cloud. | Exige conta de faturamento (cartão) no GCP para recursos avançados e esconde a telemetria interna das 4 camadas. | Não adotada |
+| **Botpress** | Low Code + LLM | Conector visual de base de conhecimento e agentes prontos. | Limites de mensagens/tokens no plano gratuito e dependência de nuvem proprietária (lock-in). | Não adotada |
+| **Typebot** | No Code / Open-Source | Interface conversacional limpa e fácil de embutir. | Focado em árvores determinísticas de formulário; não permite executar filtro PII local nem auditoria de *Aging* no cliente. | Não adotada |
+| **Rasa Open Source** | Code-First (Python) | Controle total de NLU/políticas e hospedagem on-premise. | Exige instalação pesada de Python/Docker e servidor dedicado, inviabilizando abertura em 1 clique no GitHub Pages. | Não adotada |
+| **Web Customizada (`index.html`) + Gemini API + Make (Adotada)** | Híbrida (No/Low/Vibecode + Vanilla JS) | **Custo zero**, abertura imediata via **GitHub Pages**, mascaramento PII *antes* da rede, painel ao vivo das 4 camadas, fallback automático em HTTP 503 e 24 testes executáveis no navegador. | Persistência local limitada ao navegador na demo web (mitigada pela integração paralela com Google Sheets/Make na v1.0 e exportação JSON). | **Adotada** |
+
+### 4.2 Projetos de Referência e Diferenciação
+O desenho do sistema inspirou-se em arquiteturas reais de *ITSM Automation* e assistentes auditáveis (como pipelines de triagem com regras explicáveis combinadas a classificadores/LLMs, mascaramento prévio de dados pessoais e testes automatizados de viés e segurança), diferenciando-se por unir **IA Generativa + Agente de 4 Camadas + Licença Social (Remediação Humana)** em uma entrega acessível sem instalação local.
+
 ---
 
 ## 5. Modelo de Dados e Dicionário de Dados

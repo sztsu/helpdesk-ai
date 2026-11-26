@@ -22,8 +22,11 @@
 
 ---
 
-* **Interface Web v2.0 (Chatbot + Telemetria Ao Vivo das 4 Camadas do Agente):**
-  ![Chatbot HelpDesk AI 2.0 com 4 Camadas, Filtro LGPD e Remediação](docs/images/v2_chatbot_4layers.png)
+* **Aba 1 — Portal do Colaborador (Chatbot limpo em tons pastel com guia de 3 passos, proteção LGPD e Remediação):**
+  ![Portal do Colaborador HelpDesk AI com Proteção LGPD e Remediação](docs/images/v2_chatbot_4layers.png)
+
+* **Aba 2 — Central de TI: Raciocínio do Agente (Inspeção das 4 Camadas Ao Vivo):**
+  ![Central de TI — Raciocínio do Agente em 4 Camadas](docs/images/v2_agent_4layers.png)
 
 ## Índice Completo da Documentação (Padrão TCC + Conteúdo A1)
 
@@ -69,18 +72,17 @@ O sistema foi arquitetado no modelo *Zero-Build* para que qualquer avaliador pos
    cd helpdesk-ai
    start index.html
    ```
-3. **Na interface:**
-   * Use os **cenários rápidos** no topo do chat para testar NOC (P1), Financeiro com CPF/senha (mascaramento LGPD), RH (P4), Relato Vago (controle multi-turno) e ataques adversariais (*Prompt Injection* e pedido destrutivo).
-   * Clique em **Testes Adversariais & Stress** > **Executar Suíte Completa (24 Testes)** para validar ao vivo os 24 cenários automatizados (funcionais, viés, adversariais, LGPD, equidade e carga).
-   * *(Opcional)* Clique em **Agente Local** no canto superior direito para inserir uma chave gratuita da API Google Gemini (armazenada apenas em `sessionStorage`).
+3. **Na interface (duas abas separadas):**
+   * **Portal do Colaborador:** informe seu nome e setor para iniciar a conversa como um funcionário real, testar sugestões rápidas, mascaramento automático de dados sensíveis (CPF/senha), consulta de protocolo e pedido de revisão humana.
+   * **Central de TI:** acompanhe a **Fila de chamados** (com justificativa da IA, revisão de contestações e auditoria de equidade Aging), o **Raciocínio do agente** (4 camadas), a **Auditoria**, os **Testes do agente** (24 cenários automatizados) e as **Configurações** (chave opcional da API Google Gemini em `sessionStorage` e simulação de erro `HTTP 503`).
 
 ---
 
-## Evidências da Interface Web v2.0 (Fila, Equidade e 24/24 Testes)
+## Evidências da Central de TI (Fila, Equidade e 24/24 Testes)
 
-1. **Fila Operacional, Auditoria de Equidade (Aging), Remediação e Trilha de Accountability:**
+1. **Central de TI — Fila de Chamados, KPIs, Equidade (Aging) e Revisão Humana:**
    ![Fila de Chamados, Equidade e Accountability](docs/images/v2_queue_equity.png)
-2. **Painel de Avaliação Crítica (Mello, 2024) com 24 de 24 Testes Aprovados:**
+2. **Central de TI — Painel de Avaliação Crítica (Mello, 2024) com 24 de 24 Testes Aprovados:**
    ![Painel com 24 Testes Automatizados Aprovados](docs/images/v2_tests_24.png)
 
 ---
@@ -91,7 +93,7 @@ O sistema foi arquitetado no modelo *Zero-Build* para que qualquer avaliador pos
 helpdesk-ai/
 ├── index.html                               # Aplicação Web: Chatbot + Agente Autônomo 4 Camadas
 ├── assets/
-│   ├── styles.css                           # Design System Editorial Technical (Dark Mode)
+│   ├── styles.css                           # Interface Clara em Tons Pastel (Portal do Colaborador + Central de TI)
 │   └── agent.js                             # Motor do Agente (PII, Memória 3D, RAG, Guardrails, Tools, Testes)
 ├── docs/
 │   ├── 01_visao_geral_escopo_regras.md      # Visão geral, escopo e regras de negócio

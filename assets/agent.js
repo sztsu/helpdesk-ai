@@ -577,6 +577,60 @@
       return tk;
     }
 
+    // Limpa apenas a conversa atual (Memória de Curto Prazo) sem apagar os chamados corporativos
+    clearConversation() {
+      this.shortTermMemory = [];
+      this.pendingClarification = null;
+    }
+
+    // Equipe de TI altera o status operacional do chamado
+    setTicketStatus(ticketId, status) {
+      const tk = this.tickets.find(function (t) { return t.id === ticketId; });
+      if (!tk) return null;
+      tk.status = status;
+      this._saveTickets(this.tickets);
+      this.auditLog.unshift({
+        timestamp: new Date().toISOString(),
+        event: "STATUS_CHANGE",
+        ticketId: tk.id,
+        detail: tk.id + ": status alterado para \"" + status + "\" pela equipe de TI."
+      });
+      this._saveAudit();
+      return tk;
+    }
+
+    // Human-in-the-loop: analista decide sobre a contestação (mantém ou ajusta a prioridade)
+    reviewContest(ticketId, newPriority, note) {
+      const tk = this.tickets.find(function (t) { return t.id === ticketId; });
+      if (!tk) return null;
+      const SLA_BY_PRIORITY = {
+        P1: [30, "30 minutos"],
+        P2: [60, "1 hora"],
+        P3: [240, "4 horas"],
+        P4: [1440, "24 horas"]
+      };
+      const before = tk.priority;
+      if (SLA_BY_PRIORITY[newPriority] && newPriority !== before) {
+        tk.priority = newPriority;
+        tk.slaMinutes = SLA_BY_PRIORITY[newPriority][0];
+        tk.slaLabel = SLA_BY_PRIORITY[newPriority][1];
+      }
+      tk.contested = false;
+      tk.reviewed = true;
+      tk.reviewOutcome = tk.priority === before ? "Prioridade mantida (" + before + ")" : "Prioridade ajustada de " + before + " para " + tk.priority;
+      tk.reviewNote = note || "Revisão concluída pelo analista.";
+      tk.status = "Revisado por analista";
+      this._saveTickets(this.tickets);
+      this.auditLog.unshift({
+        timestamp: new Date().toISOString(),
+        event: "HUMAN_REVIEW_DECISION",
+        ticketId: tk.id,
+        detail: tk.id + ": " + tk.reviewOutcome + ". Justificativa: " + tk.reviewNote
+      });
+      this._saveAudit();
+      return tk;
+    }
+
     // Chamada opcional à API Real do Gemini (com fallback automático para HTTP 503)
     async _tryGeminiLive(sanitizedText, sector, kbMatch, apiKey) {
       if (this.simulateHttp503) {
@@ -849,7 +903,15 @@
         status: "Triado pelo Agente",
         aged: false,
         contested: false,
-        contestReason: ""
+        contestReason: "",
+        rationale: {
+          engine: engineUsed,
+          kbTitle: kbMatch ? kbMatch.article.title : "Procedimento Padrão de Contingência N1",
+          kbTerms: kbMatch ? kbMatch.matchedTerms.slice(0, 6) : [],
+          equityNote: decision.equityNote,
+          pii: perception.redactions.map(function (r) { return r.type; }),
+          recurrence: recurrenceCount
+        }
       };
 
       this.tickets.unshift(newTicket);
